@@ -1,0 +1,87 @@
+.howItWorks {
+  padding: 60px 30px;
+  text-align: center;
+  height: 70vh;
+  background: #f2f2f2;
+}
+
+.title {
+  font-size: 39px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 50px;
+}
+
+.stepsContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.line {
+  position: absolute;
+  top: 40px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  border-top: 2px dashed #c7d2fe;
+  z-index: 0;
+}
+
+.step {
+
+  width: 30%;
+  z-index: 1;
+}
+
+.circle {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight:bolder;
+  color: white;
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.step h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.step p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stepsContainer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .step {
+    width: 100%;
+  }
+}

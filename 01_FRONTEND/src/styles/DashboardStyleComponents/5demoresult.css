@@ -1,0 +1,109 @@
+/* ===== Section ===== */
+.demo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 100px 80px;
+  background: #0f172a;
+  color: white;
+  flex-wrap: wrap;
+}
+
+/* ===== Left Content ===== */
+.demo__content {
+  max-width: 520px;
+}
+
+/* Badge */
+.demo__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e293b;
+  color: #cbd5f5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+/* Title */
+.demo__title {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+/* Description */
+.demo__desc {
+  font-size: 16px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* List */
+.demo__list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.demo__list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #cbd5e1;
+}
+
+/* Icon color */
+.demo__list svg {
+  color: #22c55e;
+}
+
+/* Button */
+.demo__btn {
+  background: #6366f1;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.demo__btn:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+}
+
+/* ===== Right Image ===== */
+.demo__image img {
+  width: 420px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .demo {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .demo__content {
+    max-width: 100%;
+  }
+
+  .demo__list li {
+    justify-content: center;
+  }
+}

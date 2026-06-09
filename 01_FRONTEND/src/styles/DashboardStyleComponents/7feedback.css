@@ -1,0 +1,111 @@
+/* Section */
+.feedbackSection {
+  padding: 80px 10%;
+  display: block;
+  text-align: center;
+  background: #f2f2f2;
+}
+
+.feedbackSection h2 {
+  font-size: 36px;
+  /* display: flex; */
+  font-weight: 700;
+  color: #111827;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: large;
+  margin: 10px 0 50px;
+}
+
+/* Container (FIXED) */
+.feedbackContainer {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+}
+
+/* Card */
+.feedbackcard {
+  background: #f9fafb;
+  padding: 25px;
+  border-radius: 20px;
+  width: 320px;
+  text-align: left; /* FIXED */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.feedbackcard:hover {
+  transform: translateY(-5px);
+}
+
+/* Stars */
+.feedbackstars {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+/* Text */
+.reviewText {
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* User section (FIXED) */
+.user {
+  display: flex;              /* FIXED */
+  align-items: center;        /* FIXED */
+  gap: 12px;
+}
+
+/* Name + role */
+.user h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.user span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Avatar colors */
+.avatar.purple {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.avatar.teal {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+}
+
+.avatar.violet {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feedbackContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
