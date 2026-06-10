@@ -22,6 +22,11 @@ const StartRecording = () => {
   const timerIntervalRef = useRef(null);
   const recognitionRef = useRef(null);
 
+  // for audio waves
+  const analyserRef = useRef(null);
+  const audioDataRef = useRef(null);
+  const animationRef = useRef(null);
+
   /*
     -----------------------------------
     STATES
@@ -37,6 +42,9 @@ const StartRecording = () => {
 
   const [transcript,setTranscript] = useState("");
 
+  // for audio waves
+  const [waveData, setwaveData] = useState(Array(20).fill(5));
+
   /*
     -----------------------------------
     START CAMERA
@@ -50,6 +58,21 @@ const StartRecording = () => {
       });
 
       streamRef.current = mediaStream;
+
+      // for audio waveform
+      const audioContext = new AudioContext();
+      const analyzer = audioContext.createAnalyser();
+
+      const source = audioContext.createMediaStreamSource(mediaStream);
+      source.connect(analyzer);
+
+      analyzer.fftSize = 64;
+
+      const bufferLength = analyzer.frequencyBinCount;
+      const dataArray= new Uint8Array(bufferLength);
+      analyserRef.current=analyzer;
+      audioDataRef.current = dataArray;
+    // done
 
       setStream(mediaStream);
 
@@ -178,6 +201,32 @@ const StartRecording = () => {
   };
   /*
     -----------------------------------
+    START WAVES
+    -----------------------------------
+  */
+  const startWaveAnimation = () => {
+    const animate = () => {
+      if (!analyserRef.current) return;
+      
+      analyserRef.current.getByteFrequencyData(
+        audioDataRef.current
+      )
+
+      const bars = Array.from(
+        audioDataRef.current
+      ).slice(0,20);
+
+      setwaveData(
+        bars.map((v)=>Math.max(6,v/4))
+      );
+      animationRef.current = requestAnimationFrame(animate);
+
+    };
+
+    animate();
+  }
+  /*
+    -----------------------------------
     START RECORDING
     -----------------------------------
   */
@@ -241,6 +290,7 @@ const StartRecording = () => {
 
       setIsRecording(true);
       setTranscript("");
+      startWaveAnimation();
       startSpeechRecognition();
 
       startTimer();
@@ -273,6 +323,7 @@ const StartRecording = () => {
       Turn camera OFF after recording
     */
     stopMediaTracks();
+    cancelAnimationFrame(animationRef.current);
   };
 
   /*
@@ -297,7 +348,18 @@ const StartRecording = () => {
     stopSpeechRecognition();
 
     stopMediaTracks();
+    cancelAnimationFrame(animationRef.current);
   };
+
+  /*
+    -----------------------------------
+    Get microphone stream
+    -----------------------------------
+  */
+  // const stream=await navigator.mediaDevices.getUserMedia({
+  //   audio:true
+  // });
+
 
   /*
     -----------------------------------
@@ -437,6 +499,19 @@ const StartRecording = () => {
 
             </div>
           </div>
+        </div>
+
+        {/* <div className="bg-white rounded-2xl p-6 mt-4 w-full max-w-xl flex justify-center items-center gap-1"> */}
+        <div className="bg-white rounded-2xl p-6 mt-4 w-full max-w-xl h-24 flex justify-center items-center gap-1 overflow-hidden">
+          {waveData.map((height, index) => (
+            <div
+              key={index}
+              className="w-1.5 rounded-full bg-gradient-to-t from-indigo-600 to-cyan-400 transition-all duration-75"
+              style={{
+                height: `${height}px`,
+              }}
+            />
+          ))}
         </div>
 
         {/* BUTTONS */}
