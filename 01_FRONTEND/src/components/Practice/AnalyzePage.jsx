@@ -5,7 +5,7 @@ import {
   RotateCcw,
   Sparkles,
 } from "lucide-react";
-import { getInterview } from "../../utils/interviewStoreage";
+import { getInterviewDraft } from "../../utils/interviewStorage";
 
 const AnalyzePage = () => {
 
@@ -19,20 +19,20 @@ const AnalyzePage = () => {
     let url;
 
     const load = async () => {
-      const interview = await getInterview();
+      const interview = await getInterviewDraft();
 
       // console.log("Interview:", interview);
 
-      if(!interview)  return;
+      if(!interview?.recording)  return;
 
       // console.log(interview.videoBlob);
       // console.log(videoURL);
 
-      url = URL.createObjectURL(interview.videoBlob);
+      url = URL.createObjectURL(interview.recording.videoBlob);
 
       setVideoURL(url);
 
-      setTranscript(interview.transcript);
+      setTranscript(interview.recording.transcript);
     };
 
     load();

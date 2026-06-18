@@ -1,10 +1,35 @@
 import React from 'react'
+import { saveSession } from '../../utils/interviewStorage';
 import { Camera, CheckCircle, FileVideoCamera, Video } from "lucide-react";
 import { useNavigate } from 'react-router';
+import { useAuth } from '../../context/AuthContext';
 
 const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
     const isSelected = selectedId === id;
     const navigate=useNavigate();
+    const { userId, loading }=useAuth();
+
+    const handleStartRecording = async (e) => {
+
+      e.stopPropagation();
+
+      if (loading) return;
+
+      if (!userId) {
+        navigate("/login");
+        return;
+      }
+
+      await saveSession({
+        userId,
+        questionId: id,
+        question: q,
+        createdAt: Date.now()
+
+      });
+      
+      navigate("/startRecording");
+    };
     return(
     <div
       onClick={() => setSelectedId(id)}
@@ -45,7 +70,7 @@ const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
       {isSelected && (
         <div className="mt-auto">
           <button
-            onClick={() => navigate("/startRecording")}
+            onClick={handleStartRecording}
             className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
           >
             <div className='flex justify-center items-center gap-2 p-1'>

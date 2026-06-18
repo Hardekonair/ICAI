@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import Header from "../DashComponents/1Header";
-import { saveInterview } from "../../utils/interviewStoreage";
+import { saveRecording } from "../../utils/interviewStorage";
 
 const StartRecording = () => {
 
@@ -279,10 +279,10 @@ const StartRecording = () => {
       mediaRecorder.onstop = async () => {
         const blob = new Blob (chunks,{type:"video/webm"});
         
-        await saveInterview({
+        await saveRecording({
           videoBlob:blob,
           transcript,
-          question:"jjjjjj",
+          createdAt: Date.now(),
         });
         
         navigate("/analyze");
