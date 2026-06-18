@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import {
   AlertCircle,
   MessageSquare,
@@ -9,8 +10,11 @@ import {
 } from "lucide-react";
 
 import Header from "../DashComponents/1Header";
+import { saveInterview } from "../../utils/interviewStoreage";
 
 const StartRecording = () => {
+
+  const navigate = useNavigate(); // Because useNavigate() is a React Hook, must be called inside a react component
   /*
     -----------------------------------
     REFS
@@ -267,24 +271,35 @@ const StartRecording = () => {
         }
       };
 
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, {
-          type: "video/webm",
+      // mediaRecorder.onstop = () => {
+      //   const blob = new Blob(chunks, {
+      //     type: "video/webm",
+      //   });
+      // setVideoBlob(blob);
+      mediaRecorder.onstop = async () => {
+        const blob = new Blob (chunks,{type:"video/webm"});
+        
+        await saveInterview({
+          videoBlob:blob,
+          transcript,
+          question:"jjjjjj",
         });
+        
+        navigate("/analyze");
+      };
 
-        setVideoBlob(blob);
 
         /*
           Remove old URL
         */
-        if (videoURL) {
-          URL.revokeObjectURL(videoURL);
-        }
+        // if (videoURL) {
+        //   URL.revokeObjectURL(videoURL);
+        // }
 
-        const url = URL.createObjectURL(blob);
+        // const url = URL.createObjectURL(blob);
 
-        setVideoURL(url);
-      };
+        // setVideoURL(url);
+      // };
 
       mediaRecorder.start();
 

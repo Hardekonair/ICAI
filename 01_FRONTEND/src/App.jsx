@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard";
 import HomePage from "./components/HomePage/HomePage";
 import ChooseQuestion from "./components/Practice/ChooseQuestion";
 import StartRecording from "./components/Practice/StartRecording";
+import AnalyzePage from "./components/Practice/AnalyzePage";
 
 
 function App(){
@@ -18,6 +19,7 @@ function App(){
         <Route path="*" element={<PageNotFound/>}/>
         <Route path="/questions" element={<ChooseQuestion/>}/>
         <Route path="/startRecording" element={<StartRecording/>}/>
+        <Route path="/analyze" element={<AnalyzePage/>}/>
       </Routes>
   );
 }
