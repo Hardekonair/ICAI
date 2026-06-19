@@ -9,12 +9,17 @@ export const AuthProvider=({children})=>{   // {Childern} is a special prop that
     const [user,setuser]=useState(null);
     const [loading,setloading]=useState(true);
 
+    const refreshUser=async()=>{
+        const res=await API.get("/auth/me");
+        setuser(res.data.user);
+        return res.data.user;
+    };
+
     // Check if user is logged in when app loads
     useEffect(()=>{
         const fetchUser=async()=>{
             try{
-                const res=await API.get("/auth/me");
-                setuser(res.data.user);
+                await refreshUser();
             }catch(err){
                 setuser(null);
             }finally{
@@ -26,8 +31,10 @@ export const AuthProvider=({children})=>{   // {Childern} is a special prop that
 
     // This will render the components wrapped inside AuthProvider in App.jsx and provide them access to user and setUser through context
     // This makes user, setUser and loading available to any component that consumes this context
+    const userId=user?.id ?? user?._id ?? null;
+
     return(
-        <AuthContext.Provider value={{user,setuser,loading}}>   
+        <AuthContext.Provider value={{user,setuser,loading,refreshUser,userId}}>   
             {children}
         </AuthContext.Provider>
     )

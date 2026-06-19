@@ -11,7 +11,7 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const {user,setuser}=useAuth();  // We can access user and loading state from AuthContext using this custom hook. This is possible because we wrapped our app with AuthProvider in main.jsx which provides this context to the entire app. So now we can check if user is logged in or not and also if auth state is still loading or not to prevent navigation while loading. This is a great example of how context allows us to share state across the entire app without prop drilling.
+  const {user,refreshUser}=useAuth();  // We can access user and loading state from AuthContext using this custom hook. This is possible because we wrapped our app with AuthProvider in main.jsx which provides this context to the entire app. So now we can check if user is logged in or not and also if auth state is still loading or not to prevent navigation while loading. This is a great example of how context allows us to share state across the entire app without prop drilling.
 
   const [name, setname] = useState("")
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ export default function Login() {
       const res=await API.post("/auth/login", { email, password });
       seterror("")  // remove prev error
       alert(res.data.message)
-      setuser(res.data.user);  // Update user state in context with the logged in user data returned from backend. This will make the user data available across the entire app to any component that consumes this context. This is important for showing user info in header, protecting routes, etc.
+      await refreshUser();  // Login sets an httpOnly cookie, then /auth/me loads the current user into context.
       setTimeout(()=>{
         navigate("/homepage", {replace: true});
       },100);
