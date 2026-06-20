@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import Header from "../DashComponents/1Header";
-import { saveRecording } from "../../utils/interviewStorage";
+import { saveRecording, getSession } from "../../utils/interviewStorage";
 
 const StartRecording = () => {
 
@@ -25,6 +25,7 @@ const StartRecording = () => {
   const streamRef = useRef(null);
   const timerIntervalRef = useRef(null);
   const recognitionRef = useRef(null);
+  const recordingStartRef = useRef(null);   //Need start timestamp, Need duration calculation
 
   // for audio waves
   const analyserRef = useRef(null);
@@ -46,8 +47,23 @@ const StartRecording = () => {
 
   const [transcript,setTranscript] = useState("");
 
+  const [question, setQuestion] = useState(""); // Add Question State
+
   // for audio waves
   const [waveData, setwaveData] = useState(Array(20).fill(5));
+
+  //  FOR SAVING SESSION DATA AND QUESTION, Create loadQuestion()
+  const loadQuestion = async () =>{
+    
+    const session = await getSession();
+
+    if(!session){
+      navigate("/practice");
+      return;
+    }
+
+    setQuestion(session.question);
+  };
 
   /*
     -----------------------------------
@@ -252,6 +268,9 @@ const StartRecording = () => {
 
       setTimer(0);
 
+      // Save Recording Start Time
+      recordingStartRef.current = Date.now();
+
       const options = MediaRecorder.isTypeSupported("video/webm")
         ? { mimeType: "video/webm" }
         : {};
@@ -279,9 +298,23 @@ const StartRecording = () => {
       mediaRecorder.onstop = async () => {
         const blob = new Blob (chunks,{type:"video/webm"});
         
+        // Calculate Duration
+        const endedAt = Date.now();
+        const duration = Math.floor((endedAt - recordingStartRef.current)/1000);
+        
+        // Prevent Tiny Recordings
+        if(duration<3){
+
+          alert("Please Record atleast 3 SECOND");
+          return;
+
+        }
         await saveRecording({
           videoBlob:blob,
           transcript,
+          duration,
+          startedAt: recordingStartRef.current,
+          endedAt,
           createdAt: Date.now(),
         });
         
@@ -384,6 +417,9 @@ const StartRecording = () => {
   useEffect(() => {
     startCamera();
 
+    // Call loadQuestion()
+    loadQuestion();
+
     return () => {
       /*
         Stop recorder
@@ -446,16 +482,16 @@ const StartRecording = () => {
         {/* QUESTION BOX */}
         <div className="bg-white border border-indigo-100 rounded-2xl px-5 py-4 mb-5 max-w-xl w-full text-center shadow-sm">
           <p className="text-base font-semibold text-gray-900 leading-relaxed">
-            Walk me through your resume.
+            {question?.title}
           </p>
 
           <div className="flex items-center justify-center gap-2 mt-2">
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">
-              Easy
+              {question?.difficulty}
             </span>
 
             <span className="text-xs text-gray-400">
-              Behavioral
+              {question?.type}
             </span>
           </div>
         </div>
