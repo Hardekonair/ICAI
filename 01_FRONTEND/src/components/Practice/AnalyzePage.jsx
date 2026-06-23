@@ -1,4 +1,5 @@
 import React, { useState,useEffect, useMemo } from "react";
+import { analyzeInterview } from "../../services/interviewApi";
 import {
   AlertCircle,
   FileText,
@@ -6,33 +7,57 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getInterviewDraft } from "../../utils/interviewStorage";
+import {useNavigate} from "react-router-dom"
 
 const AnalyzePage = () => {
 
   const [videoURL, setVideoURL] = useState("");
   const [transcript, setTranscript] = useState("");
+  const [question, setQuestion] = useState(null);
+  const [duration,setDuration] = useState(0);
+  const [loading, setLoading] = useState(false);
   
+  const navigate = useNavigate();
   // const transcript =
   //   "Hi my name is hardik and i am a student";
 
   useEffect(() => {
     let url;
-
+    
     const load = async () => {
+
       const interview = await getInterviewDraft();
+      console.log("Interview Draft:", interview);
+
+      if (
+        !interview?.session &&
+        !interview?.recording
+      ) {
+
+        navigate("/practice");
+
+        return;
+      }
+
 
       // console.log("Interview:", interview);
 
       if(!interview?.recording)  return;
 
+      if(interview.session){
+        setQuestion(interview.session.question);
+      }
+
       // console.log(interview.videoBlob);
       // console.log(videoURL);
+      if(interview.recording){
+        url = URL.createObjectURL(interview.recording.videoBlob);
+        setVideoURL(url);
 
-      url = URL.createObjectURL(interview.recording.videoBlob);
+        setTranscript(interview.recording.transcript || "");
+        setDuration(interview.recording.duration || 0);
+      }
 
-      setVideoURL(url);
-
-      setTranscript(interview.recording.transcript);
     };
 
     load();
@@ -44,11 +69,57 @@ const AnalyzePage = () => {
 
   },[]);
 
+  const handleAnalyze = async () => {
+    try {
+
+      setLoading(true);
+
+      const response =
+        await analyzeInterview({
+          question: question.title,
+          transcript,
+          duration
+        });
+
+      console.log("API RESPONSE", response);
+
+      console.log(response);
+
+      navigate("/review", {
+        state: {
+          question,
+          transcript,
+          analysis: response.analysis
+        }
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
   const wordCount = useMemo(() => {
     return transcript.trim()
       ? transcript.trim().split(/\s+/).length
       : 0;
   }, [transcript]);
+
+  const formatDuration = (seconds) => {
+    const mins = Math.floor(seconds/60);
+    const secs = seconds % 60;
+
+    return `${mins
+      .toString()
+      .padStart(2,"0")}:${secs
+      .toString()
+      .padStart(2,"0")}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,11 +132,11 @@ const AnalyzePage = () => {
             Review Your Answer
           </span>
 
-          <h1 className="mt-5 text-5xl font-bold text-slate-900 tracking-tight">
+          <h1 className="mt-5 text-3xl font-bold text-slate-900 tracking-tight">
             Confirm your transcript
           </h1>
 
-          <p className="mt-3 text-lg text-slate-500 max-w-4xl">
+          <p className="mt-3 text-sm text-slate-500 max-w-4xl">
             This is what our speech recognition captured.
             Review it, fix any errors, then submit for
             analysis.{" "}
@@ -93,7 +164,7 @@ const AnalyzePage = () => {
               <video
                 controls
                 src={videoURL}
-                className="w-full aspect-video object-cover"
+                className="w-full h-full aspect-video object-cover"
               />
             )}
           </div>
@@ -111,7 +182,7 @@ const AnalyzePage = () => {
                 </span>
 
                 <span className="font-semibold text-slate-800 text-right">
-                  Tell me about yourself.
+                  {question?.title || "No Question Found"}
                 </span>
               </div>
 
@@ -122,7 +193,7 @@ const AnalyzePage = () => {
 
                 <span className="font-semibold text-slate-800">
                   <span className="text-slate-400 font-normal">
-                    / 01:02
+                    {formatDuration(duration)}
                   </span>
                 </span>
               </div>
@@ -203,6 +274,7 @@ const AnalyzePage = () => {
         {/* ACTIONS */}
         <div className="mt-8 flex items-center justify-between">
           <button
+            onClick={() => {console.log({question,transcript, duration}); navigate("/startRecording");}}
             className="
               flex items-center gap-2
               px-6 py-3
@@ -220,6 +292,8 @@ const AnalyzePage = () => {
           </button>
 
           <button
+            onClick={handleAnalyze}
+            disabled={loading}
             className="
               flex items-center gap-2
               px-8 py-4
@@ -236,7 +310,9 @@ const AnalyzePage = () => {
             "
           >
             <Sparkles size={18} />
-            Analyze My Answer
+            {loading
+              ? "Analyzing..."
+              : "Analyze My Answer"}
           </button>
         </div>
       </div>
