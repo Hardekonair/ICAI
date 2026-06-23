@@ -1,4 +1,5 @@
 import React, { useState,useEffect, useMemo } from "react";
+import { analyzeInterview } from "../../services/interviewApi";
 import {
   AlertCircle,
   FileText,
@@ -14,6 +15,7 @@ const AnalyzePage = () => {
   const [transcript, setTranscript] = useState("");
   const [question, setQuestion] = useState(null);
   const [duration,setDuration] = useState(0);
+  const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
   // const transcript =
@@ -25,6 +27,7 @@ const AnalyzePage = () => {
     const load = async () => {
 
       const interview = await getInterviewDraft();
+      console.log("Interview Draft:", interview);
 
       if (
         !interview?.session &&
@@ -65,6 +68,41 @@ const AnalyzePage = () => {
     };
 
   },[]);
+
+  const handleAnalyze = async () => {
+    try {
+
+      setLoading(true);
+
+      const response =
+        await analyzeInterview({
+          question: question.title,
+          transcript,
+          duration
+        });
+
+      console.log("API RESPONSE", response);
+
+      console.log(response);
+
+      navigate("/review", {
+        state: {
+          question,
+          transcript,
+          analysis: response.analysis
+        }
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
 
   const wordCount = useMemo(() => {
     return transcript.trim()
@@ -254,6 +292,8 @@ const AnalyzePage = () => {
           </button>
 
           <button
+            onClick={handleAnalyze}
+            disabled={loading}
             className="
               flex items-center gap-2
               px-8 py-4
@@ -270,7 +310,9 @@ const AnalyzePage = () => {
             "
           >
             <Sparkles size={18} />
-            Analyze My Answer
+            {loading
+              ? "Analyzing..."
+              : "Analyze My Answer"}
           </button>
         </div>
       </div>

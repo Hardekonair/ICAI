@@ -26,11 +26,13 @@ const StartRecording = () => {
   const timerIntervalRef = useRef(null);
   const recognitionRef = useRef(null);
   const recordingStartRef = useRef(null);   //Need start timestamp, Need duration calculation
+  const transcriptRef = useRef("");     // is the SAME object forever.
 
   // for audio waves
   const analyserRef = useRef(null);
   const audioDataRef = useRef(null);
   const animationRef = useRef(null);
+
 
   /*
     -----------------------------------
@@ -57,13 +59,18 @@ const StartRecording = () => {
     
     const session = await getSession();
 
-    if(!session){
-      navigate("/practice");
-      return;
-    }
+      if(!session){
+        navigate("/practice");
+        return;
+      }
 
-    setQuestion(session.question);
-  };
+      setQuestion(session.question);
+    };
+
+    useEffect(() => {
+      console.log("Transcript State Updated:", transcript);
+      setTranscript(transcript);
+    }, [transcript]);
 
   /*
     -----------------------------------
@@ -203,7 +210,10 @@ const StartRecording = () => {
           event.results[i][0].transcript + " ";
       }
 
+      transcriptRef.current = transcriptText;     // Now both transcript and transcript.current stay synchronized
+
       setTranscript(transcriptText);
+      console.log(transcript);
     };
 
     recognition.onerror = (event) => {
@@ -296,6 +306,7 @@ const StartRecording = () => {
       //   });
       // setVideoBlob(blob);
       mediaRecorder.onstop = async () => {
+
         const blob = new Blob (chunks,{type:"video/webm"});
         
         // Calculate Duration
@@ -309,9 +320,12 @@ const StartRecording = () => {
           return;
 
         }
+        console.log("Saving Transcript",transcriptRef.current);
         await saveRecording({
           videoBlob:blob,
-          transcript,
+
+          transcript : transcriptRef.current,
+
           duration,
           startedAt: recordingStartRef.current,
           endedAt,
@@ -338,6 +352,8 @@ const StartRecording = () => {
 
       setIsRecording(true);
       setTranscript("");
+
+      transcriptRef.current = "";     // reset otherwise previous recording transcript can remain
       startWaveAnimation();
       startSpeechRecognition();
 
@@ -363,6 +379,7 @@ const StartRecording = () => {
     stopTimer();
 
     setIsRecording(false);
+    setTranscript(transcript);
 
     stopSpeechRecognition();
 
@@ -397,6 +414,7 @@ const StartRecording = () => {
 
     stopMediaTracks();
     cancelAnimationFrame(animationRef.current);
+    navigate("/questions");
   };
 
   /*
