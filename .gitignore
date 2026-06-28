@@ -1,5 +1,8 @@
 node_modules/
+01_FRONTEND/.env
 .env
 dist/
 build/
 coverage/cd
+02_BACKEND/.env
+**/node_modules/
