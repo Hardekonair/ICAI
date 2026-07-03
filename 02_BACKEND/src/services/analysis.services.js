@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI }
 from "@google/generative-ai";
 import { buildInterviewPrompt } from "../prompt/interview.prompt.js";
+console.log("Gemini key:", process.env.GEMINI_API_KEY?.slice(0, 8));
+
 const genAI =
   new GoogleGenerativeAI(
     process.env.GEMINI_API_KEY
