@@ -38,7 +38,8 @@ const ReviewPage = () => {
   const {
     question,
     transcript,
-    analysis
+    analysis,
+    speechStats
   } = state || {};
 
   console.log(analysis);
@@ -77,7 +78,7 @@ const ReviewPage = () => {
             />
 
             <SpeechStatsCard
-              stats={analysis?.speechStats}
+              stats={speechStats}
             />
 
             <ProTipCard />

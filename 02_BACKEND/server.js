@@ -7,4 +7,5 @@ connectDB();
 
 app.listen(process.env.PORT,()=>{
     console.log("Server is running on SecretPort");
+    // console.log(process.env.GEMINI_API_KEY);
 })

@@ -7,7 +7,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getInterviewDraft } from "../../utils/interviewStorage";
-import {useNavigate} from "react-router-dom"
 
 const AnalyzePage = () => {
 
@@ -110,17 +109,6 @@ const AnalyzePage = () => {
       : 0;
   }, [transcript]);
 
-  const formatDuration = (seconds) => {
-    const mins = Math.floor(seconds/60);
-    const secs = seconds % 60;
-
-    return `${mins
-      .toString()
-      .padStart(2,"0")}:${secs
-      .toString()
-      .padStart(2,"0")}`;
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* PAGE CONTAINER */}
@@ -193,7 +181,7 @@ const AnalyzePage = () => {
 
                 <span className="font-semibold text-slate-800">
                   <span className="text-slate-400 font-normal">
-                    {formatDuration(duration)}
+                    / 01:02
                   </span>
                 </span>
               </div>
@@ -204,7 +192,7 @@ const AnalyzePage = () => {
                 </span>
 
                 <span className="font-bold text-slate-900">
-                  {wordCount}
+                  {speechStats.words}
                 </span>
               </div>
             </div>
@@ -242,7 +230,7 @@ const AnalyzePage = () => {
             </div>
 
             <span className="text-slate-400 text-sm">
-              {wordCount} words
+              {speechStats.words} words
             </span>
           </div>
 
