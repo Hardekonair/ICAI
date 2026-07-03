@@ -7,6 +7,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getInterviewDraft } from "../../utils/interviewStorage";
+import {useNavigate} from "react-router-dom"
+import { calculateSpeechStats } from "../../utils/speechStats";
 
 const AnalyzePage = () => {
 
@@ -77,7 +79,8 @@ const AnalyzePage = () => {
         await analyzeInterview({
           question: question.title,
           transcript,
-          duration
+          duration,
+          speechStats
         });
 
       console.log("API RESPONSE", response);
@@ -88,7 +91,8 @@ const AnalyzePage = () => {
         state: {
           question,
           transcript,
-          analysis: response.analysis
+          analysis: response.analysis,
+          speechStats
         }
       });
 
@@ -103,11 +107,41 @@ const AnalyzePage = () => {
     }
   };
 
-  const wordCount = useMemo(() => {
-    return transcript.trim()
-      ? transcript.trim().split(/\s+/).length
-      : 0;
-  }, [transcript]);
+  // const wordCount = useMemo(() => {
+  //   return transcript.trim()
+  //     ? transcript.trim().split(/\s+/).length
+  //     : 0;
+  // }, [transcript]);
+
+  // Now whenever the user edits the transcript or the duration changes, speechStats updates automatically.
+  const speechStats = useMemo(() => {
+    return calculateSpeechStats(
+      transcript,
+      duration
+    );
+  },[transcript,duration]);
+
+  const formatDuration = (seconds) => {
+    const mins = Math.floor(seconds/60);
+    const secs = seconds % 60;
+
+    return `${mins
+      .toString()
+      .padStart(2,"0")}:${secs
+      .toString()
+      .padStart(2,"0")}`;
+  };
+
+  const formatDuration = (seconds) => {
+    const mins = Math.floor(seconds/60);
+    const secs = seconds % 60;
+
+    return `${mins
+      .toString()
+      .padStart(2,"0")}:${secs
+      .toString()
+      .padStart(2,"0")}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -181,7 +215,7 @@ const AnalyzePage = () => {
 
                 <span className="font-semibold text-slate-800">
                   <span className="text-slate-400 font-normal">
-                    / 01:02
+                    {speechStats.duration}
                   </span>
                 </span>
               </div>
