@@ -84,4 +84,4 @@ const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
   )
 }
 
-export default QuestionCard
+export default React.memo(QuestionCard);

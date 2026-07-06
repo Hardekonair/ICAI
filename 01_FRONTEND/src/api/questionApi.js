@@ -1,7 +1,7 @@
-import axios from "axios";
+import API from "../api";
 
 export const getQuestions = async () => {
-    const response = await axios.get("/api/questions");
+    const response = await API.get("/questions");
 
     console.log("Response from backend:", response);
 
