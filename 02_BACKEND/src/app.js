@@ -1,6 +1,6 @@
 import express from "express";
 import authRoutes from "./routes/auth.js"
-import questionRoutes from "./routes/question.js"
+import questionRoutes from "./routes/question.routes.js"
 import interviewRoutes from "./routes/interview.routes.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"

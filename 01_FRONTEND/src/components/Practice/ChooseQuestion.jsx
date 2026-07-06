@@ -2,14 +2,38 @@ import React from 'react'
 import SideBar from '../Sidebar'
 import QuestionCard from './QuestionCard.jsx';
 import Header from '../DashComponents/1Header';
-import { useSearchParams } from 'react-router';
-import { useState } from 'react';
-import { Mic, Sparkles } from 'lucide-react';
-import {questions} from '../../data/questions.js';
+import { useState, useEffect } from 'react';
+import { Mic } from 'lucide-react';
+// import {questions} from '../../data/questions.js';
+import { getQuestions } from "../../api/questionApi";
 
 
 const ChooseQuestion = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const loadQuestions = async () => {
+      try {
+          const data = await getQuestions();
+
+          console.log("API Response:", data);
+
+          setQuestions(data);
+
+      } catch (err) {
+          console.error(err);
+      }
+  };
+  useEffect(() => {
+
+      loadQuestions();
+
+  }, []);
+
+
   // const questions=questions;
   // data/questions.js
  
@@ -68,9 +92,9 @@ const ChooseQuestion = () => {
       <div className="grid md:grid-cols-2 gap-6">
         {questions.map((q,index) => (
           <QuestionCard
-            key={index}   // key is special prop for React, not passed as a porperty
+            key={q._id}   // key is special prop for React, not passed as a porperty
+            id={q._id}
             q={q}
-            id={index}
             selectedId={selectedId}
             setSelectedId={setSelectedId}
           />

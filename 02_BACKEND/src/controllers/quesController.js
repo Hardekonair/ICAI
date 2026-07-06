@@ -31,3 +31,23 @@ export const createQuestion=async(req,res)=>{
         res.status(500).json({message:"Internal server error", message: err.message});    
     }
 };
+
+export const getQuestions = async (req, res) => {
+    try {
+
+        const questions = await quesModel.find();
+
+        res.status(200).json({
+            success: true,
+            questions
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+
+    }
+};
