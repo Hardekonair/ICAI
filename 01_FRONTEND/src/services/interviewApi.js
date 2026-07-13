@@ -6,6 +6,18 @@ export const analyzeInterview = async (data) => {
     "/interview/analyze",
     data
   );
-
   return response.data;
+};
+
+export const saveInterview = async (formData) => {
+    const response = await API.post("/interview/save",formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true
+        }
+    );
+    return response.data;
+
 };
