@@ -15,16 +15,23 @@ import { getInterviewDraft } from "../../utils/interviewStorage";
 const ReviewPage = () => {
   const { state } = useLocation();
   const [videoUrl, setVideoUrl] = useState(null)
+  const [videoBlob, setVideoBlob] = useState(null);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
   const load = async () => {
     const interview = await getInterviewDraft();
 
-    if (interview?.recording?.videoBlob) {
-      const url = URL.createObjectURL(
-        interview.recording.videoBlob
-      );
-      setVideoUrl(url);
+    if (interview?.recording) {
+
+        const url = URL.createObjectURL(interview.recording.videoBlob);
+
+        setVideoUrl(url);
+
+        setVideoBlob(interview.recording.videoBlob);
+
+        setDuration(interview.recording.duration);
+
     }
   };
 
@@ -103,7 +110,14 @@ const ReviewPage = () => {
 
         </div>
 
-        <ActionButtons />
+        <ActionButtons
+          videoBlob={videoBlob}
+          question={question}
+          transcript={transcript}
+          duration={duration}
+          speechStats={speechStats}
+          analysis={analysis}
+      />
 
       </div>
     </div>

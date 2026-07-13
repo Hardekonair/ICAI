@@ -17,6 +17,7 @@ const AnalyzePage = () => {
   const [question, setQuestion] = useState(null);
   const [duration,setDuration] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [videoBlob, setVideoBlob] = useState(null);
   
   const navigate = useNavigate();
   // const transcript =
@@ -54,6 +55,7 @@ const AnalyzePage = () => {
       if(interview.recording){
         url = URL.createObjectURL(interview.recording.videoBlob);
         setVideoURL(url);
+        setVideoBlob(interview.recording.videoBlob);
 
         setTranscript(interview.recording.transcript || "");
         setDuration(interview.recording.duration || 0);
