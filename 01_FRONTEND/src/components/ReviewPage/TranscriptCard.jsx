@@ -6,7 +6,7 @@ const TranscriptCard = ({
   pace,
 }) => {
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-sm">
+    <div className="bg-white rounded-3xl shadow-sm p-6 flex flex-col h-full">
 
       <h2 className="font-bold text-2xl mb-4">
         Annotated Transcript
@@ -28,7 +28,7 @@ const TranscriptCard = ({
 
       </div>
 
-      <div className="border-b pb-6">
+      <div className="flex-1 overflow-y-auto">
 
         <p className="text-lg leading-9 text-slate-700">
           {transcript}
@@ -36,7 +36,7 @@ const TranscriptCard = ({
 
       </div>
 
-      <p className="mt-4 text-slate-500">
+      <p className="pt-4 border-t border-slate-200">
 
         {words} words spoken across {sentences} sentence(s)
         at ~{pace} wpm. {fillerWords} filler words detected.
