@@ -4,13 +4,14 @@ import VideoSection from "./VideoSection";
 import TranscriptCard from "./TranscriptCard";
 import ScoreCard from "./ScoreCard";
 import SpeechStatsCard from "./SpeechStatsCard";
-import ProTipCard from "./ProTipCard";
 import DimensionBreakdown from "./DimensionBreakdown";
 import ImprovementTips from "./ImprovementTips";
 import SuggestedFramework from "./SuggestedFramework";
 import ActionButtons from "./ActionButton";
 import { useEffect, useState } from "react";
 import { getInterviewDraft } from "../../utils/interviewStorage";
+import OverallFeedbackCard from "./OverallFeedbackCard";
+import DimensionSummaryCard from "./DimensionSummaryCard";
 
 const ReviewPage = () => {
   const { state } = useLocation();
@@ -60,19 +61,83 @@ const ReviewPage = () => {
 
         {/* VIDEO + TRANSCRIPT */}
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-8">
+        {/* ================= Interview Overview ================= */}
+        <div className="grid lg:grid-cols-[0.75fr_1fr] gap-6 mt-8">
 
           <VideoSection videoUrl={videoUrl} />
 
           <TranscriptCard
             transcript={transcript}
-            // fillerWords={analysis?.speechStats?.fillerWords || 0}
-            // words={analysis?.speechStats?.words || 0}
-            // sentences={analysis?.speechStats?.sentences || 0}
-            // pace={analysis?.speechStats?.pace || 0}
           />
 
         </div>
+
+
+
+        {/* SUMMARY + DIMENSIONS */}
+
+        <div className="grid lg:grid-cols-[1fr_1.34fr] gap-6 mt-6">
+
+            {/* LEFT COLUMN */}
+            <div className="space-y-4">
+
+                <div className="grid grid-cols-2 gap-4">
+
+                    <ScoreCard
+                        score={analysis?.overallScore || 0}
+                    />
+
+                    <SpeechStatsCard
+                        stats={speechStats}
+                    />
+
+                </div>
+
+                <OverallFeedbackCard
+                    feedback={analysis?.overallFeedback}
+                />
+
+            </div>
+
+            {/* RIGHT COLUMN */}
+
+            <DimensionSummaryCard
+                dimensions={analysis?.dimensions}
+            />
+
+        </div>
+
+
+        {/* ================= Performance ================= */}
+
+        <div className="mt-8">
+
+            <DimensionBreakdown
+                dimensions={analysis?.dimensions}
+            />
+
+        </div>
+
+        {/* ================= Improvement ================= */}
+
+        <div className="mt-8">
+
+            <ImprovementTips
+                tips={analysis?.improvementTips}
+            />
+
+        </div>
+
+        {/* ================= Framework ================= */}
+
+        <div className="mt-8">
+
+            <SuggestedFramework
+                framework={analysis?.framework}
+            />
+
+        </div>
+
 
         {/* ANALYSIS SECTION */}
 
@@ -80,19 +145,19 @@ const ReviewPage = () => {
 
           <div className="space-y-6">
 
-            <ScoreCard
+            {/* <ScoreCard
               score={analysis?.overallScore || 0}
             />
 
             <SpeechStatsCard
               stats={speechStats}
-            />
+            /> */}
 
-            <ProTipCard />
+            {/* <ProTipCard /> */}
 
           </div>
 
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
 
             <DimensionBreakdown
               dimensions={analysis?.dimensions}
@@ -106,7 +171,7 @@ const ReviewPage = () => {
               framework={analysis?.framework}
             />
 
-          </div>
+          </div> */}
 
         </div>
 
