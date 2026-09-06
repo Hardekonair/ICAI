@@ -33,7 +33,7 @@ export default function Signup() {
     try {
       const res=await API.post("/auth/signup", {name, email, password });
       seterror(""); // clean prev error
-      alert(res.data.message);
+      // alert(res.data.message);
       setTimeout(()=>{
         navigate("/dashboard", { replace: true });      // with replace:false-->"/signup-->/signup/dashboard", replace:false-->"/signup-->/dashboard"
       },1000)   // 1000ms
@@ -74,7 +74,8 @@ export default function Signup() {
     isValidPassword &&
     isValidConfirmpassword;
 
-  return (
+  return (<>
+    {loading && <ShowLoading message="Signing you in..." />}
     <div>
       <Header />
 
@@ -242,6 +243,6 @@ export default function Signup() {
       </div>
 
       <Contact />
-    </div>
+    </div></>
   );
 }

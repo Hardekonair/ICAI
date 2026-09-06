@@ -33,8 +33,8 @@ async ({ question,transcript,speechStats }) => {
 
       const analysis = JSON.parse(cleaned);
 
-      console.log("PARSED ANALYSIS");
-      console.log(analysis);
+      // console.log("PARSED ANALYSIS");
+      // console.log(analysis);
 
       return analysis;
 

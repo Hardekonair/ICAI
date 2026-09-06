@@ -2,6 +2,7 @@ import express from "express";
 import authRoutes from "./routes/auth.js"
 import questionRoutes from "./routes/question.routes.js"
 import interviewRoutes from "./routes/interview.routes.js"
+import dashboardRoutes from "./routes/dashboard.routes.js";
 import cors from "cors"
 import cookieParser from "cookie-parser"
 // console.log("CLIENT_URL55:", process.env.PORT);
@@ -18,4 +19,5 @@ app.use(cookieParser());
 app.use("/api/auth",authRoutes);
 app.use("/api",questionRoutes);
 app.use("/api/interview",interviewRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 export default app;

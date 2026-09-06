@@ -1,12 +1,10 @@
-import React from 'react'
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, PlayCircle, HelpCircle, BarChart3,Settings, Sidebar} from "lucide-react";
 
 
 const SideBar = () => {
     const navItems = [
         { name: "Dashboard", path: "/homepage", icon: LayoutDashboard },
-        { name: "Practice", path: "/practice", icon: PlayCircle },
         { name: "Questions", path: "/questions", icon: HelpCircle },
         { name: "Analytics", path: "/analytics", icon: BarChart3 },
         { name: "Settings", path: "/settings", icon: Settings },

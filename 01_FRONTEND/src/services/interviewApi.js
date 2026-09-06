@@ -1,4 +1,3 @@
-import axios from "axios";
 import API from "../api";
 
 export const analyzeInterview = async (data) => {
@@ -20,4 +19,16 @@ export const saveInterview = async (formData) => {
     );
     return response.data;
 
+};
+
+export const getInterviewSession = async (sessionId) => {
+
+    const response = await API.get(
+        `/interview/${sessionId}`,
+        {
+            withCredentials: true
+        }
+    );
+
+    return response.data;
 };

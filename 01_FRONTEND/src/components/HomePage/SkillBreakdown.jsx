@@ -1,23 +1,46 @@
-import { TrendingUp } from 'lucide-react';
-import React from 'react'
+import { TrendingUp } from "lucide-react";
+import React from "react";
 
-const SkillBreakdown = () => {
-    const skills = [
-        { name: "Clarity", value: 82, color: "bg-indigo-500" },
-        { name: "Confidence", value: 68, color: "bg-cyan-500" },
-        { name: "Structure", value: 75, color: "bg-purple-500" },
-        { name: "Vocabulary", value: 90, color: "bg-green-500" },
-        { name: "Pace", value: 61, color: "bg-orange-500" },
-    ];
+const SkillBreakdown = ({ skillsData }) => {
 
-    return (
+  const skills = [
+    {
+      name: "Clarity",
+      value: skillsData?.Clarity ?? 0,
+      color: "bg-indigo-500",
+    },
+    {
+      name: "Confidence",
+      value: skillsData?.Confidence ?? 0,
+      color: "bg-cyan-500",
+    },
+    {
+      name: "Structure",
+      value: skillsData?.Structure ?? 0,
+      color: "bg-purple-500",
+    },
+    {
+      name: "Fluency",
+      value: skillsData?.Fluency ?? 0,
+      color: "bg-green-500",
+    },
+    {
+      name: "Pace",
+      value: skillsData?.Pace ?? 0,
+      color: "bg-orange-500",
+    },
+  ];
+
+  return (
     <div className="bg-white p-5 md:p-5 rounded-2xl shadow-sm w-full">
-      
+
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <TrendingUp className="text-indigo-500" size={20} />
-          <h3 className="font-semibold text-lg">Skill Breakdown</h3>
+          <h3 className="font-semibold text-lg">
+            Skill Breakdown
+          </h3>
         </div>
       </div>
 
@@ -25,11 +48,14 @@ const SkillBreakdown = () => {
       <div className="space-y-2">
         {skills.map((s, i) => (
           <div key={i}>
-            
+
             {/* Label row */}
             <div className="flex justify-between items-center mb-1 text-sm md:text-base">
               <span className="text-gray-700">{s.name}</span>
-              <span className="font-semibold text-gray-900">{s.value}</span>
+
+              <span className="font-semibold text-gray-900">
+                {s.value}
+              </span>
             </div>
 
             {/* Progress bar */}
@@ -39,21 +65,20 @@ const SkillBreakdown = () => {
                 style={{ width: `${s.value}%` }}
               />
             </div>
+
           </div>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="flex justify-between items-center mt-4 pt-2 border-t text-sm">
+      <div className="flex justify-between items-center mt-4 pt-5 border-t text-sm">
         <span className="text-gray-400">
-          Based on last 12 sessions
+          Based on your sessions
         </span>
-        <button className="text-indigo-600 hover:underline">
-          Details
-        </button>
       </div>
+
     </div>
   );
-}
+};
 
-export default SkillBreakdown
+export default SkillBreakdown;

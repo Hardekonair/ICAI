@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useMemo } from "react";
-import { analyzeInterview } from "../../services/interviewApi";
+import { analyzeInterview ,saveInterview} from "../../services/interviewApi";
 import {
   AlertCircle,
   FileText,
@@ -9,6 +9,7 @@ import {
 import { getInterviewDraft } from "../../utils/interviewStorage";
 import {useNavigate} from "react-router-dom"
 import { calculateSpeechStats } from "../../utils/speechStats";
+import ShowLoading from "../ShowLoading";
 
 const AnalyzePage = () => {
 
@@ -20,8 +21,6 @@ const AnalyzePage = () => {
   const [videoBlob, setVideoBlob] = useState(null);
   
   const navigate = useNavigate();
-  // const transcript =
-  //   "Hi my name is hardik and i am a student";
 
   useEffect(() => {
     let url;
@@ -29,7 +28,7 @@ const AnalyzePage = () => {
     const load = async () => {
 
       const interview = await getInterviewDraft();
-      console.log("Interview Draft:", interview);
+      // console.log("Interview Draft:", interview);
 
       if (
         !interview?.session &&
@@ -73,40 +72,80 @@ const AnalyzePage = () => {
   },[]);
 
   const handleAnalyze = async () => {
-    try {
+      try {
 
-      setLoading(true);
+          setLoading(true);
 
-      const response =
-        await analyzeInterview({
-          question: question.title,
-          transcript,
-          duration,
-          speechStats
-        });
+          // STEP 1: Generate AI analysis
+          const analysisResponse = await analyzeInterview({
+              question: question.title,
+              transcript,
+              duration,
+              speechStats
+          });
 
-      console.log("API RESPONSE", response);
+          // STEP 2: Prepare data for saving
+          const formData = new FormData();
 
-      console.log(response);
+          formData.append(
+              "video",
+              videoBlob,
+              "interview.webm"
+          );
 
-      navigate("/review", {
-        state: {
-          question,
-          transcript,
-          analysis: response.analysis,
-          speechStats
-        }
-      });
+          formData.append(
+              "question",
+              JSON.stringify(question)
+          );
 
-    } catch (error) {
+          formData.append(
+              "transcript",
+              transcript
+          );
 
-      console.log(error);
+          formData.append(
+              "duration",
+              duration
+          );
 
-    } finally {
+          formData.append(
+              "speechStats",
+              JSON.stringify(speechStats)
+          );
 
-      setLoading(false);
+          formData.append(
+              "analysis",
+              JSON.stringify(analysisResponse.analysis)
+          );
 
-    }
+          // STEP 3: Save automatically
+          const saveResponse =
+              await saveInterview(formData);
+
+          console.log(
+              "SAVE RESPONSE:",
+              saveResponse
+          );
+
+          // STEP 4: Get MongoDB ID
+          const sessionId =
+              saveResponse.sessionId;
+
+          // STEP 5: Navigate to review
+          navigate(`/review/${sessionId}`);
+
+      } catch (error) {
+
+          console.error(
+              "Analyze/Save failed:",
+              error
+          );
+
+      } finally {
+
+          setLoading(false);
+
+      }
   };
 
   // const wordCount = useMemo(() => {
@@ -146,6 +185,10 @@ const AnalyzePage = () => {
   };
 
   return (
+    <>
+    {loading && (
+      <ShowLoading message="Analyzing your interview...Do not go back..." />
+    )}
     <div className="min-h-screen bg-gray-50">
       {/* PAGE CONTAINER */}
       <div className="max-w-5xl mx-auto px-6 py-8">
@@ -341,6 +384,7 @@ const AnalyzePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
