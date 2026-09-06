@@ -8,6 +8,7 @@ import Contact from "../DashComponents/9Contact";
 import { Sparkles } from "lucide-react";
 import LoginInfo from "./LoginInfo";
 import { useAuth } from "../../context/AuthContext";
+import ShowLoading from "../ShowLoading.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function Login() {
     try {
       const res=await API.post("/auth/login", { email, password });
       seterror("")  // remove prev error
-      alert(res.data.message)
+      // alert(res.data.message)
       await refreshUser();  // Login sets an httpOnly cookie, then /auth/me loads the current user into context.
       setTimeout(()=>{
         navigate("/homepage", {replace: true});
@@ -68,6 +69,8 @@ export default function Login() {
   const isFormValid = isValidEmail() && isValidPassword ;
 
   return (
+    <>
+    {loading && <ShowLoading message="Signing you in..." />}
     <div >
       <Header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm" />
       <div className="flex flex-col lg:flex-row min-h-screen">
@@ -187,5 +190,6 @@ export default function Login() {
 
       <Contact />
     </div>
+    </>
   );
 }

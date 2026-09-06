@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useParams  } from "react-router-dom";
 import ReviewHeader from "./ReviewHeader";
 import VideoSection from "./VideoSection";
 import TranscriptCard from "./TranscriptCard";
@@ -9,50 +9,71 @@ import ImprovementTips from "./ImprovementTips";
 import SuggestedFramework from "./SuggestedFramework";
 import ActionButtons from "./ActionButton";
 import { useEffect, useState } from "react";
-import { getInterviewDraft } from "../../utils/interviewStorage";
+// import { getInterviewDraft } from "../../utils/interviewStorage";
 import OverallFeedbackCard from "./OverallFeedbackCard";
 import DimensionSummaryCard from "./DimensionSummaryCard";
+import { getInterviewSession } from "../../services/interviewApi";
+import ShowLoading from "../ShowLoading";
 
 const ReviewPage = () => {
-  const { state } = useLocation();
-  const [videoUrl, setVideoUrl] = useState(null)
-  const [videoBlob, setVideoBlob] = useState(null);
-  const [duration, setDuration] = useState(0);
+  const {sessionId} = useParams();
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const load = async () => {
-    const interview = await getInterviewDraft();
 
-    if (interview?.recording) {
+      const loadSession = async () => {
 
-        const url = URL.createObjectURL(interview.recording.videoBlob);
+          try {
 
-        setVideoUrl(url);
+              const response =
+                  await getInterviewSession(sessionId);
 
-        setVideoBlob(interview.recording.videoBlob);
+              setSession(response.interview);
 
-        setDuration(interview.recording.duration);
+          } catch (error) {
 
-    }
-  };
+              console.error(
+                  "Failed to load interview:",
+                  error
+              );
 
-  load();
+          } finally {
 
-  return () => {
-    if (videoUrl) URL.revokeObjectURL(videoUrl);
-  };
-}, []);
+              setLoading(false);
 
+          }
+
+      };
+      
+      loadSession();
+      
+    }, [sessionId]);
+      
+      if (loading) {
+        return (
+            <ShowLoading message="Loading your interview review..." />
+        );
+      }
+      
+      if (!session) {
+        return <div>Interview not found.</div>;
+  }
+  
   const {
-    question,
-    transcript,
-    analysis,
-    speechStats
-  } = state || {};
+      question,
+      transcript,
+      analysis,
+      speechStats,
+      duration,
+      videoUrl
+    } = session;
 
-  console.log(analysis);
+
+  // console.log(analysis);
 
   return (
+    
     <div className="min-h-screen bg-[#f8fafc] pb-10">
 
       <ReviewHeader question={question} />
@@ -64,7 +85,7 @@ const ReviewPage = () => {
         {/* ================= Interview Overview ================= */}
         <div className="grid lg:grid-cols-[0.75fr_1fr] gap-6 mt-8">
 
-          <VideoSection videoUrl={videoUrl} />
+          <VideoSection videoUrl={session.videoUrl} />
 
           <TranscriptCard
             transcript={transcript}
@@ -145,38 +166,11 @@ const ReviewPage = () => {
 
           <div className="space-y-6">
 
-            {/* <ScoreCard
-              score={analysis?.overallScore || 0}
-            />
-
-            <SpeechStatsCard
-              stats={speechStats}
-            /> */}
-
-            {/* <ProTipCard /> */}
-
           </div>
-
-          {/* <div className="space-y-6">
-
-            <DimensionBreakdown
-              dimensions={analysis?.dimensions}
-            />
-
-            <ImprovementTips
-              tips={analysis?.improvementTips}
-            />
-
-            <SuggestedFramework
-              framework={analysis?.framework}
-            />
-
-          </div> */}
 
         </div>
 
         <ActionButtons
-          videoBlob={videoBlob}
           question={question}
           transcript={transcript}
           duration={duration}

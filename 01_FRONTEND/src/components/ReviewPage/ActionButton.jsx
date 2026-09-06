@@ -1,25 +1,9 @@
-import {
-  RotateCcw,
-  ArrowRight,
-  Home,
-  Save
-} from "lucide-react";
+import {RotateCcw,ArrowRight,Home,Save} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { saveInterview } from "../../services/interviewApi";
 
-const ActionButtons = ({
-        videoBlob,
-        question,
-        transcript,
-        duration,
-        speechStats,
-        analysis
-    }) => {
+const ActionButtons = () => {
+
   const navigate = useNavigate();
-
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
 
   const handlePracticeAgain = () => {
     navigate(-1);
@@ -29,72 +13,8 @@ const ActionButtons = ({
     navigate("/practice");
   };
 
-  const handleSave = async () => {
-
-      if (saved) return;
-
-      try {
-
-          setSaving(true);
-
-          const formData = new FormData();
-
-          formData.append(
-              "video",
-              videoBlob,
-              "interview.webm"
-          );
-
-          formData.append(
-              "question",
-              JSON.stringify(question)
-          );
-
-          formData.append(
-              "transcript",
-              transcript
-          );
-
-          formData.append(
-              "duration",
-              duration
-          );
-
-          formData.append(
-              "speechStats",
-              JSON.stringify(speechStats)
-          );
-
-          formData.append(
-              "analysis",
-              JSON.stringify(analysis)
-          );
-
-          const response =
-              await saveInterview(formData);
-
-          console.log(response);
-
-          setSaved(true);
-
-          alert("Interview saved successfully!");
-
-      } catch (error) {
-
-          console.error(error);
-
-          alert("Failed to save interview.");
-
-      } finally {
-
-          setSaving(false);
-
-      }
-
-  };
-
   const handleDashboard = () => {
-      navigate("/dashboard");
+    navigate("/homepage");
   };
 
   return (
@@ -142,58 +62,23 @@ const ActionButtons = ({
         </div>
       </button>
 
-      <button
-        onClick={handleSave}
-        disabled={saving || saved}
-        className="
-            bg-emerald-600
-            rounded-3xl
-            p-6
-            flex
-            items-center
-            justify-center
-            gap-4
-            text-white
-            shadow-lg
-            hover:scale-[1.01]
-            transition-all
-            duration-300
-            disabled:opacity-60
-        "
-    >
+       {/* Saved Status */}
+
+      <div className="bg-emerald-600 rounded-3xl p-6 flex items-center justify-center gap-4 text-white shadow-lg">
         <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-
             <Save size={22} />
-
         </div>
 
         <div className="text-left">
-
             <h3 className="font-semibold text-lg">
-
-                {
-                    saved
-                        ? "Report Saved"
-                        : saving
-                        ? "Saving..."
-                        : "Save Report"
-                }
-
+            Report Saved
             </h3>
 
             <p className="text-white/80 text-sm">
-
-                {
-                    saved
-                        ? "Interview stored successfully"
-                        : "Upload and save this interview"
-                }
-
+            Interview stored successfully
             </p>
-
         </div>
-
-    </button>
+    </div>
 
     <button
         onClick={handleDashboard}

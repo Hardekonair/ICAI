@@ -4,6 +4,7 @@ import API from "../../api";
 import React from "react";
 import logo from "../../assets/logoicon.png";
 import { useNavigate } from "react-router";
+import ShowLoading from "../ShowLoading";
 
 export default function Header() {
   const navigate=useNavigate();
@@ -36,18 +37,28 @@ export default function Header() {
 
   // 🔥 Logout
   const handleLogout = async () => {
-    try{
+    try {
       setloggingout(true);
-      const res=await API.post("/auth/logout");
-      setUser(null);
-      console.log("USer is unset:");
-      alert(res.data.message);
-      setTimeout(()=>{navigate("/")},800);
 
-    } catch(err){
-      console.log("Logout Error: ",err.response?.data || err.message);
-      alert(err.response?.data?.message || "Logout faield");
-    } finally{
+      await API.post("/auth/logout");
+
+      setUser(null);
+      console.log("User is unset");
+
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 200);
+
+    } catch (err) {
+      console.log(
+        "Logout Error:",
+        err.response?.data || err.message
+      );
+
+      alert(
+        err.response?.data?.message || "Logout failed"
+      );
+
       setloggingout(false);
     }
   };
@@ -57,7 +68,12 @@ export default function Header() {
   }
 
   return (
-      // <header class="sticky justify-between top-0 z-40 h-16 bg-white border-b border-gray-100 shadow-sm flex items-center px-4 gap-4" >
+    <>
+    {loggingout && (
+      <ShowLoading message="Signing you out..." />
+    )}
+    
+      {/* <header class="sticky justify-between top-0 z-40 h-16 bg-white border-b border-gray-100 shadow-sm flex items-center px-4 gap-4" > */}
     <header className="sticky top-0 z-50 w-full border-b bg-white shadow-md">
       <div className="max-w px-5 mx-auto  py-2 flex justify-between items-center">
       
@@ -172,5 +188,6 @@ export default function Header() {
       )}
       </div>
     </header>
+    </>
   );
 }

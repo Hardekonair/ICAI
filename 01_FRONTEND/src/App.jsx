@@ -21,7 +21,8 @@ function App(){
         <Route path="/questions" element={<ChooseQuestion/>}/>
         <Route path="/startRecording" element={<StartRecording/>}/>
         <Route path="/analyze" element={<AnalyzePage/>}/>
-        <Route path="/review" element={<ReviewPage/>}/>
+        <Route path="/review/:sessionId" element={<ReviewPage />}
+/>
       </Routes>
   );
 }

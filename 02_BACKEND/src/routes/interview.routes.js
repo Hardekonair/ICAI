@@ -2,7 +2,7 @@ import express from "express";
 
 import {
   analyzeInterview,
-  saveInterview
+  saveInterview, getInterviewSession
 } from "../controllers/interview.controller.js";
 import upload from "../middleware/upload.middleware.js";
 
@@ -17,6 +17,11 @@ router.post(
     verifyUser,
     upload.single("video"),
     saveInterview
+);
+router.get(
+    "/:sessionId",
+    verifyUser,
+    getInterviewSession
 );
 
 export default router;
