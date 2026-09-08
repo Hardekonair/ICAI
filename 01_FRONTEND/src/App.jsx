@@ -8,6 +8,7 @@ import ChooseQuestion from "./components/Practice/ChooseQuestion";
 import StartRecording from "./components/Practice/StartRecording";
 import AnalyzePage from "./components/Practice/AnalyzePage";
 import ReviewPage from "./components/ReviewPage/ReviewPage";
+import Analytics from "./Analytics/Analytics";
 
 
 function App(){
@@ -21,8 +22,8 @@ function App(){
         <Route path="/questions" element={<ChooseQuestion/>}/>
         <Route path="/startRecording" element={<StartRecording/>}/>
         <Route path="/analyze" element={<AnalyzePage/>}/>
-        <Route path="/review/:sessionId" element={<ReviewPage />}
-/>
+        <Route path="/review/:sessionId" element={<ReviewPage />}/>
+        <Route path="/analytics" element={<Analytics/>}/>
       </Routes>
   );
 }
