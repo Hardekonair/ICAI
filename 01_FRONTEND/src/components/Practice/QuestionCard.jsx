@@ -75,7 +75,7 @@ const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
             className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
           >
             <div className='flex justify-center items-center gap-2 p-1'>
-            <Video/> Start Recording
+            <Video/> Start Practice
 
             </div>
           </button>

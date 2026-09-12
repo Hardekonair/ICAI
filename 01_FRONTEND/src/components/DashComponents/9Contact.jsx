@@ -17,13 +17,13 @@ export default function Contact() {
             </div>
 
             <span className="font-bold text-lg text-white">
-              Interview <span className="text-indigo-600">Coach</span>
+              Comms<span className="text-indigo-600">Up</span>
             </span>
           </div>
 
           <p>
-            AI-powered interview coaching for everyone. Practice smarter,
-            land your dream job.
+            Your AI-powered communication improvement companion. Practice,
+            understand your patterns, and grow with every session.
           </p>
 
           {/* Social Icons */}

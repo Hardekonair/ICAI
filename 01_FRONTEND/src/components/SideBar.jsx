@@ -5,7 +5,7 @@ import { LayoutDashboard, PlayCircle, HelpCircle, BarChart3,Settings, Sidebar} f
 const SideBar = () => {
     const navItems = [
         { name: "Dashboard", path: "/homepage", icon: LayoutDashboard },
-        { name: "Questions", path: "/questions", icon: HelpCircle },
+        { name: "Practice Prompts", path: "/questions", icon: HelpCircle },
         { name: "Analytics", path: "/analytics", icon: BarChart3 },
         { name: "Settings", path: "/settings", icon: Settings },
     ];

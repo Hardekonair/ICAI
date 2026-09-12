@@ -20,7 +20,7 @@ export default function Features() {
     {
       icon: <FileText />,
       title: "Content Feedback",
-      desc: "Evaluates structure, relevance, and depth of your answers.",
+      desc: "Evaluates structure, clarity, and depth in your response.",
     },
     {
       icon: <Clock />,
@@ -65,12 +65,12 @@ export default function Features() {
         </div>
 
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-          Every Dimension of Your Interview Performance
+          Every Dimension of Your Communication
         </h2>
 
         <p className="text-gray-500 text-base">
-          Six AI models work in parallel to give you the most complete interview
-          feedback available.
+          AI-powered insights help you understand your speaking patterns and
+          improve with every practice session.
         </p>
       </div>
 

@@ -91,18 +91,18 @@ export default function Header() {
           >
             <img
               src={logo}
-              alt="Interview Coach logo"
+              alt="CommsUp logo"
               className="h-12 w-13 rounded-2xl p-1 shadow-sm"
             />
             <div className="min-w-0 leading-tight">
               <span className="block text-lg font-bold text-gray-900 sm:text-xl">
-                Interview{" "}
+                Comms{" "}
                 <span className=" text-indigo-600">
-                  Coach
+                  Up
                 </span>
               </span>
               <span className="hidden text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">
-                AI Interview Practice
+                AI Communication Practice
               </span>
             </div>
           </button>

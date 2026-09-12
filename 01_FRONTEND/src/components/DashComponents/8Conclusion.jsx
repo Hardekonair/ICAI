@@ -6,7 +6,7 @@ export default function Conclusion() {
   const navigate=useNavigate();
   return (
     <section className="conclusion">
-      <h1>Ready to Nail Your Next Interview?</h1>
+      <h1>Ready to Communicate with More Confidence?</h1>
       <p>Start practicing for free — no credit card required.</p>
 
       <button className="cta-btn" onClick={()=>navigate("/login")}>

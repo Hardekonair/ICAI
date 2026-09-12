@@ -626,7 +626,7 @@ useEffect(() => {
             >
               <Play size={16} />
 
-              START RECORDING
+              START PRACTICE
             </button>
           ) : (
             <button
@@ -635,7 +635,7 @@ useEffect(() => {
             >
               <Square size={16} />
 
-              STOP RECORDING
+              FINISH PRACTICE
             </button>
           )}
 

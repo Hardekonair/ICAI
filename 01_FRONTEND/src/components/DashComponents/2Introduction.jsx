@@ -17,22 +17,22 @@ const Introduction = () => {
         <div className="mt-9 mb-1 inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
         
           <Sparkles size={10} color="white" />
-          AI-Powered Interview Coach
+          CommsUp · AI Communication Practice
         </div>
 
         {/* TITLE */}
         <h1 className="mt-0 text-[clamp(2rem,5vw,3.75rem)] font-semibold leading-tight">
-          Nail Every Interview.{" "}
+          Communicate Better.{" "}
           <span className="bg-gradient-to-r from-[#5ce1e6] to-[#00ffa3] bg-clip-text text-transparent ">
             AI-Powered
           </span>{" "}
-          Communication Coach
+          Every Time.
         </h1>
 
         {/* DESCRIPTION */}
         <p className="mt-3 text-[16px] md:text-[18px] leading-relaxed text-white/90">
-          Practice with real interview questions. Get instant AI feedback on
-          your speech, facial expressions, and body language. Land the job.
+          Practice speaking with thoughtful prompts, get AI-powered feedback,
+          and build clearer, more confident communication habits.
         </p>
 
         {/* BUTTON */}
@@ -65,7 +65,7 @@ const Introduction = () => {
           </div>
           <div>
             <h2 className="text-2xl font-semibold">3.2x</h2>
-            <p>More Offers</p>
+            <p>More Confident</p>
           </div>
         </div>
       </div>

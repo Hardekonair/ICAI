@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 
 const reeview = [
   {
-    text: `"I went from freezing in interviews to getting 3 offers in a month. The filler-word tracker alone changed everything."`,
+    text: `"I went from freezing when I spoke to sharing my ideas with confidence. The filler-word tracker alone changed everything."`,
     name: "Hardik S.",
     role: "Software Engineer",
     initials: "HS",
@@ -17,7 +17,7 @@ const reeview = [
     color: "teal",
   },
   {
-    text: `"Practicing at 11 PM the night before my interview and still getting detailed AI feedback — that's a game changer."`,
+    text: `"Practicing whenever I have a few minutes and getting detailed AI feedback has been a game changer."`,
     name: "Aisha K.",
     role: "UX Designer",
     initials: "AK",
@@ -30,7 +30,7 @@ export default function Reviews() {
     <section className="feedbackSection">
       <h2>Real People. Real Results.</h2>
       <p className="subtitle">
-        Join 10,000+ job seekers who've levelled up their interview game.
+        Join 10,000+ people building stronger communication habits.
       </p>
 
       <div className="feedbackContainer">

@@ -4,18 +4,18 @@ export default function HowItWorks() {
   const steps = [
     {
       number: "01",
-      title: "Select a Question & Record",
-      desc: "Choose from 500+ real interview questions across every industry. Hit record and answer naturally.",
+      title: "Choose a Prompt & Speak",
+      desc: "Choose a communication prompt, hit record, and express your thoughts naturally.",
     },
     {
       number: "02",
-      title: "AI Analyses Your Response",
+      title: "AI Analyses Your Communication",
       desc: "Our models process speech, facial expressions, body language, and content simultaneously.",
     },
     {
       number: "03",
-      title: "Get Your Report & Improve",
-      desc: "Receive a detailed scorecard with timestamped feedback and a clear improvement roadmap.",
+      title: "Discover Insights & Improve",
+      desc: "Receive clear feedback, speaking insights, and a focused next step for improvement.",
     },
   ];
 

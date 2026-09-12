@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import authRoutes from "./routes/auth.js"
 import questionRoutes from "./routes/question.routes.js"
@@ -26,4 +28,21 @@ app.use("/api/interview",interviewRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/email-verification", emailVerificationRoutes);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// React SPA fallback
+
+app.use((req, res, next) => {
+    if (req.method !== "GET") {
+        return next();
+    }
+
+    if (req.path.startsWith("/api")) {
+        return next();
+    }
+
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+});
 export default app;

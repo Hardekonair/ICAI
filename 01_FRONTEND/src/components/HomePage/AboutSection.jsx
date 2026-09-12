@@ -85,9 +85,9 @@ export default function AboutSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { name: "Alex Chen", role: "AI Engineer & Founder", initials: "AC", color: "from-indigo-500 to-purple-500" },
-            { name: "Sarah Williams", role: "Head of Product", initials: "SW", color: "from-cyan-500 to-teal-500" },
-            { name: "James Rodriguez", role: "ML Research Lead", initials: "JR", color: "from-purple-500 to-indigo-500" },
+            { name: "Hardik S", role: "AI Engineer & Founder", initials: "AC", color: "from-indigo-500 to-purple-500" },
+            // { name: "Sarah Williams", role: "Head of Product", initials: "SW", color: "from-cyan-500 to-teal-500" },
+            // { name: "James Rodriguez", role: "ML Research Lead", initials: "JR", color: "from-purple-500 to-indigo-500" },
           ].map((member, i) => (
             <div key={i} className="bg-white p-6 rounded-2xl shadow-sm text-center">
               

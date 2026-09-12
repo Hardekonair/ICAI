@@ -31,7 +31,7 @@ const ChooseQuestion = () => {
     }
     catch (err) {
         console.error(err);
-        setError("Unable to load interview questions.");
+        setError("Unable to load practice prompts.");
     }
     finally {
         setLoading(false);
@@ -65,7 +65,7 @@ const ChooseQuestion = () => {
           catch (err) {
 
               if (isMounted) {
-                  setError("Unable to load interview questions.");
+                  setError("Unable to load practice prompts.");
               }
 
               console.error(err);
@@ -112,7 +112,7 @@ const ChooseQuestion = () => {
           <div className="flex justify-center items-center h-screen">
 
               <p className="text-gray-500 text-lg">
-                  Loading questions...
+                  Loading practice prompts...
               </p>
 
           </div>
@@ -174,11 +174,11 @@ const ChooseQuestion = () => {
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-          Choose your question, testcase
+          Choose a practice prompt
         </h1>
 
         <p className="text-gray-500 mt-2">
-          Pick a question, record your answer, and get real AI feedback.
+          Pick a prompt, share your response, and get AI communication feedback.
         </p>
       </div>
 
@@ -215,13 +215,13 @@ const ChooseQuestion = () => {
 
               <h2 className="text-xl font-semibold">
 
-                  No Questions Found
+                  No Practice Prompts Found
 
               </h2>
 
               <p className="text-gray-500 mt-2">
 
-                  Try selecting another category.
+                  Try selecting another prompt category.
 
               </p>
 
