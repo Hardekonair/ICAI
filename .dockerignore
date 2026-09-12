@@ -1,0 +1,9 @@
+# This image only needs files from 02_BACKEND.
+node_modules/
+02_BACKEND/node_modules/
+
+# Secrets must be supplied at container runtime, not baked into the image.
+02_BACKEND/.env
+
+.git/
+npm-debug.log*

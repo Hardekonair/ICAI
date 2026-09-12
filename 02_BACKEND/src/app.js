@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use("/api/auth",authRoutes);
 app.use("/api",questionRoutes);
 app.use("/api/interview",interviewRoutes);
-app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/homepage", dashboardRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/email-verification", emailVerificationRoutes);
 export default app;

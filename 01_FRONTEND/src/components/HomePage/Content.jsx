@@ -6,9 +6,9 @@ import PracticeQuestions from './PracticeQuestions'
 import WeeklyGoal from './WeeklyGoal'
 import ProPlan from './ProPlan'
 import AboutSection from './AboutSection'
-import SideBar from '../Sidebar'
 import React, { useEffect, useState } from "react";
 import { getDashboard } from "../../api/dashboardApi";
+import SideBar from '../SideBar'
 
 const Content = () => {
 
