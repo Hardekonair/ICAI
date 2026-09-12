@@ -10,6 +10,9 @@ WORKDIR /app
 #since our nodemodules are in git ignore we need to install all the node dependencies in this app dir again
 RUN npm install
 
+ARG VITE_CLIENT_ID
+ENV VITE_CLIENT_ID=754032587549-46dr6iu4gdvlu92mblu9gqmr829kjdh2.apps.googleusercontent.com
+
 # creating dist folder
 RUN npm run build
 
