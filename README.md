@@ -1,284 +1,196 @@
-**CommsUp
-**
-Practice. Communicate. Improve.
+# CommsUp
 
-Live Demo: https://commsup.onrender.com
+> **Practice. Communicate. Improve.**
 
-CommsUp is an AI-powered communication improvement platform that helps
-users practice speaking, record responses, and receive actionable
-feedback on their communication skills.
+<div align="center">
 
-✨ Features
+### 🚀 AI-Powered Communication Improvement Platform
 
-🎙️ Speaking practice with communication-focused prompts
+**CommsUp helps you practice speaking, understand your communication patterns, receive AI-powered feedback, and continuously improve.**
 
-🎥 Browser-based video/voice recording
+<br>
 
-🤖 AI-powered communication analysis
+🌐 **Live Demo:**  
+**https://commsup.onrender.com**
 
-📊 Insights on clarity, fluency, confidence, pace, vocabulary, and
-filler words
+</div>
 
-📈 Practice history and progress tracking
+---
 
-🔐 JWT authentication with secure cookies
+## 📌 About The Project
 
-🔑 Google OAuth authentication
+**CommsUp** is an AI-powered communication improvement platform designed to help users become more effective and confident communicators through **practice, recording, analysis, and personalized feedback**.
 
-📝 Session transcripts, scores, feedback, and improvement tips
+The platform allows users to practice speaking on different topics, record their responses, and receive AI-generated insights about their communication.
 
-🌙 Responsive interface with light/dark theme support
+Instead of simply providing a score, CommsUp focuses on helping users understand:
 
-🧠 How It Works
+- What they are doing well
+- What communication habits they need to improve
+- Where they can become clearer
+- How they can reduce filler words
+- How they can improve fluency and pacing
+- How effectively they structure their thoughts
+- What they should focus on in their next practice session
 
-Practice Prompt
-      ↓
-Record Response
-      ↓
-Video / Audio Blob
-      ↓
-Transcript + Session Data
-      ↓
-Backend API
-      ↓
-Gemini AI Analysis
-      ↓
-Communication Insights
-      ↓
-Review + Improvement
+> **The core idea is simple: Practice → Analyze → Understand → Improve.**
 
-🛠️ Tech Stack
+---
 
-Frontend
+# ✨ Features
 
-React.js
+### 🎙️ Speaking Practice
 
-Vite
+Practice speaking using a variety of communication-focused prompts and exercises.
 
-React Router
+Users can practice:
 
-Tailwind CSS
+- Explaining ideas
+- Sharing opinions
+- Telling stories
+- Describing experiences
+- Presenting solutions
+- Expressing thoughts clearly
 
-Axios
+---
 
-IndexedDB (idb)
+### 🎥 Browser-Based Recording
 
-Backend
+Users can record their responses directly from the browser.
 
-Node.js
+The application handles the recorded media as browser **Blobs**, allowing the recording to be processed before analysis and storage.
 
-Express.js
+---
 
-MongoDB
+### 🤖 AI-Powered Communication Analysis
 
-Mongoose
+CommsUp uses **Google Gemini** to analyze the user's response and generate meaningful communication feedback.
 
-JWT
+The analysis focuses on areas such as:
 
-Cookie Parser
+- **Clarity**
+- **Fluency**
+- **Confidence**
+- **Vocabulary**
+- **Pace**
+- **Filler Words**
+- **Structure**
+- **Conciseness**
 
-CORS
+---
 
-Multer
+### 🧠 Communication Insights
 
-ImageKit
+Instead of only displaying a numerical score, CommsUp provides actionable insights such as:
 
-AI & Authentication
+> "Your explanation was clear, but some ideas could be expressed more concisely."
 
-Google Gemini API
+> "Your speaking pace was slightly fast. Consider pausing between important ideas."
 
-JWT authentication
+> "Your response had a strong structure and logical flow."
 
-Google OAuth
+This makes the feedback practical and useful for future practice.
 
-Deployment
+---
 
-Docker
+### 📊 Progress Tracking
 
-Render
+Users can review their previous practice sessions and observe their communication development over time.
 
-MongoDB Atlas
+The platform can help users identify recurring communication patterns and areas that require more practice.
 
-📁 Project Structure
-
-CommsUp/
-├── 01_FRONTEND/
-│   ├── src/
-│   ├── public/
-│   └── package.json
-├── 02_BACKEND/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── models/
-│   │   └── ...
-│   ├── server.js
-│   └── package.json
-├── Dockerfile
-├── .dockerignore
-├── .gitignore
-└── README.md
-
-🏗️ Architecture
-
-The project uses a single Dockerized application. The React frontend is
-built first, and its production files are served by the Express backend.
-
-                 Browser
-                    │
-                    ▼
-            ┌───────────────┐
-            │    Express    │
-            │ React + APIs  │
-            └───────┬───────┘
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-   MongoDB Atlas          Gemini API
-
-💻 Local Development
-
-1. Clone the repository
-
-git clone <your-repository-url>
-cd CommsUp
-
-2. Install dependencies
-
-cd 01_FRONTEND
-npm install
-
-cd ../02_BACKEND
-npm install
-
-3. Configure environment variables
-
-Backend .env:
-
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-GEMINI_API_KEY=your_gemini_api_key
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-CLIENT_URL=http://localhost:5000
-
-Frontend .env:
-
-VITE_CLIENT_ID=your_google_client_id
-
-Never commit .env files or secret API keys to GitHub.
-
-🐳 Docker
-
-Build the image:
-
-docker build . -t commsup
-
-Run locally:
-
-docker run --env-file 02_BACKEND/.env -p 5000:5000 commsup
-
-Open:
-
-http://localhost:5000
-
-For production, Render provides the PORT environment variable
-automatically.
-
-🔐 Environment Variables
-
-Backend
-
-Variable                 Purpose
-
-MONGO_URI              MongoDB connection string
-JWT_SECRET             JWT signing secret
-GEMINI_API_KEY         Gemini API key
-GOOGLE_CLIENT_SECRET   Google OAuth secret
-CLIENT_URL             Application origin
-PORT                   Local development port; Render provides the production port
-
-Frontend
-
-Variable           Purpose
-
-VITE_CLIENT_ID   Google OAuth client ID
-
-VITE_CLIENT_ID is a public client identifier used during the frontend
-build. Backend secrets must never be exposed to the frontend.
-
-🚀 Deployment
-
-The application is deployed on Render using Docker.
-
-GitHub
-   ↓
-Render
-   ↓
-Docker Build
-   ↓
-Docker Container
-   ↓
-Live Application
-
-After the initial deployment, updates can be deployed by pushing to the
-connected GitHub branch:
-
-git add .
-git commit -m "Add new feature"
-git push origin main
-
-With automatic deployment enabled, Render rebuilds and redeploys the
-application while keeping the same live URL.
-
-🎯 Project Focus
-
-CommsUp focuses on continuous communication improvement through
-deliberate practice and AI feedback.
-
-It helps users improve:
-
-Clarity
-
-Confidence
-
-Fluency
-
-Conciseness
-
-Vocabulary
-
-Pace
-
-Articulation
-
-Filler-word usage
-
-Response structure
-
-Overall speaking effectiveness
-
-🔮 Future Enhancements
-
-Personalized communication improvement plans
-
-More practice categories
-
-Advanced communication analytics
-
-AI conversation practice
-
-Real-time speaking feedback
-
-Personalized practice recommendations
-
-AI-generated prompts based on user goals
-
-👨‍💻 Author
-
-Built as a full-stack AI project combining modern web technologies,
-cloud services, and generative AI.
-
-📄 License
-
-This project is intended for educational and portfolio purposes.
+---
+
+### 📝 Session Review
+
+After completing a practice session, users can review:
+
+- Recorded response
+- Transcript
+- Communication score
+- Speech statistics
+- AI observations
+- Strengths
+- Improvement areas
+- Personalized improvement tips
+
+---
+
+### 🔐 Secure Authentication
+
+CommsUp provides authentication using:
+
+- JWT
+- HTTP cookies
+- Protected routes
+- Secure backend authentication
+
+---
+
+### 🔑 Google Authentication
+
+Users can authenticate using their Google account through **Google OAuth**.
+
+---
+
+### 🌙 Responsive Interface
+
+The application is designed to work across different screen sizes.
+
+It supports:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+It also includes **Light and Dark themes**.
+
+---
+
+# 🧠 How CommsUp Works
+
+```text
+                    👤 USER
+                       │
+                       ▼
+              🎯 Practice Prompt
+                       │
+                       ▼
+                🎙️ Record Response
+                       │
+                       ▼
+             🎥 Browser Media Blob
+                       │
+                       ▼
+              📝 Transcript + Data
+                       │
+                       ▼
+                 ⚙️ Backend API
+                       │
+                       ▼
+                 🤖 Gemini AI
+                       │
+                       ▼
+            ┌─────────────────────┐
+            │ Communication       │
+            │     Analysis        │
+            ├─────────────────────┤
+            │ ✓ Clarity           │
+            │ ✓ Fluency           │
+            │ ✓ Confidence        │
+            │ ✓ Vocabulary        │
+            │ ✓ Pace              │
+            │ ✓ Filler Words      │
+            │ ✓ Structure         │
+            │ ✓ Conciseness       │
+            └──────────┬──────────┘
+                       │
+                       ▼
+                🧠 AI Insights
+                       │
+                       ▼
+                 📊 Review
+                       │
+                       ▼
+                🚀 Improve
