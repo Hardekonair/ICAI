@@ -1,11 +1,10 @@
 import React from 'react'
-import SideBar from '../Sidebar'
 import QuestionCard from './QuestionCard.jsx';
 import Header from '../DashComponents/1Header';
 import { useState, useEffect } from 'react';
 import { Mic } from 'lucide-react';
-// import {questions} from '../../data/questions.js';
 import { getQuestions } from "../../api/questionApi";
+import SideBar from '../SideBar.jsx';
 
 
 const ChooseQuestion = () => {

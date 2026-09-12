@@ -5,12 +5,10 @@ const OverallFeedbackCard = ({
 }) => {
 
     return (
-
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-5  flex flex-col">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 flex flex-col max-h-[420px]">
 
             {/* Header */}
-
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 shrink-0">
 
                 <MessageSquareQuote
                     size={20}
@@ -24,26 +22,24 @@ const OverallFeedbackCard = ({
             </div>
 
             {/* Scrollable Body */}
-
             <div
                 className="
                     flex-1
+                    min-h-0
                     overflow-y-auto
+                    overflow-x-hidden
                     pr-2
                     text-slate-600
                     leading-7
                     text-[15px]
+                    break-words
                 "
             >
-
                 {feedback}
-
             </div>
 
         </div>
-
     );
-
 };
 
 export default OverallFeedbackCard;

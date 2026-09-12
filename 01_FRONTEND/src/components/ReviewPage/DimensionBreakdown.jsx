@@ -19,22 +19,22 @@ import {
 /* -------------------------------- */
 
 const ProgressBar = ({ score }) => {
+  const safeScore = Math.min(Math.max(score || 0, 0), 100);
+
   let color = "bg-red-500";
 
-  if (score >= 75) {
+  if (safeScore >= 75) {
     color = "bg-emerald-500";
-  } else if (score >= 50) {
+  } else if (safeScore >= 50) {
     color = "bg-amber-500";
   }
 
   return (
-    <div className="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
-
+    <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
       <div
         className={`${color} h-full rounded-full transition-all duration-700`}
-        style={{ width: `${score}%` }}
+        style={{ width: `${safeScore}%` }}
       />
-
     </div>
   );
 };
@@ -44,66 +44,28 @@ const ProgressBar = ({ score }) => {
 /* -------------------------------- */
 
 const getIcon = (title) => {
-
-  switch (title.toLowerCase()) {
-
+  switch (title?.toLowerCase()) {
     case "clarity":
-      return (
-        <MessageCircle
-          className="text-sky-600"
-          size={20}
-        />
-      );
+      return <MessageCircle className="text-sky-600" size={18} />;
 
     case "confidence":
-      return (
-        <Activity
-          className="text-violet-600"
-          size={20}
-        />
-      );
+      return <Activity className="text-violet-600" size={18} />;
 
     case "fluency":
-      return (
-        <Mic
-          className="text-emerald-600"
-          size={20}
-        />
-      );
+      return <Mic className="text-emerald-600" size={18} />;
 
     case "relevance":
-      return (
-        <Target
-          className="text-red-500"
-          size={20}
-        />
-      );
+      return <Target className="text-red-500" size={18} />;
 
     case "structure":
-      return (
-        <FileText
-          className="text-orange-500"
-          size={20}
-        />
-      );
+      return <FileText className="text-orange-500" size={18} />;
 
     case "technical accuracy":
-      return (
-        <Code2
-          className="text-cyan-600"
-          size={20}
-        />
-      );
+      return <Code2 className="text-cyan-600" size={18} />;
 
     default:
-      return (
-        <MessageCircle
-          className="text-indigo-600"
-          size={20}
-        />
-      );
+      return <MessageCircle className="text-indigo-600" size={18} />;
   }
-
 };
 
 /* -------------------------------- */
@@ -111,158 +73,10 @@ const getIcon = (title) => {
 /* -------------------------------- */
 
 const getScoreColor = (score) => {
-
-  if (score >= 75)
-    return "text-emerald-600";
-
-  if (score >= 50)
-    return "text-amber-500";
+  if (score >= 75) return "text-emerald-600";
+  if (score >= 50) return "text-amber-500";
 
   return "text-red-500";
-
-};
-
-/* -------------------------------- */
-/* Dimension Item                   */
-/* -------------------------------- */
-
-const DimensionItem = ({
-  title,
-  score,
-  strength,
-  weakness,
-  evidence,
-  improvement,
-}) => {
-
-  const [expanded, setExpanded] =
-    useState(false);
-
-  return (
-
-    <div className="border border-slate-200 rounded-2xl overflow-hidden transition-all duration-300">
-
-      {/* Header */}
-
-      <button
-
-        onClick={() =>
-          setExpanded(!expanded)
-        }
-
-        className="
-            w-full
-            p-5
-            bg-white
-            hover:bg-slate-50
-            transition
-        "
-
-      >
-
-        <div className="flex justify-between items-start">
-
-          {/* Left */}
-
-          <div className="flex items-center gap-3">
-
-            <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
-
-              {getIcon(title)}
-
-            </div>
-
-            <div className="text-left">
-
-              <h3 className="text-xl font-semibold text-slate-800">
-
-                {title}
-
-              </h3>
-
-              <p className="text-sm text-slate-500 mt-1">
-
-                AI competency score
-
-              </p>
-
-            </div>
-
-          </div>
-
-          {/* Right */}
-
-          <div className="flex items-center gap-4">
-
-            <div className="text-right">
-
-              <h3
-                className={`text-2xl font-bold ${getScoreColor(score)}`}
-              >
-
-                {score}
-
-                <span className="text-base text-slate-400">
-
-                  /100
-
-                </span>
-
-              </h3>
-
-            </div>
-
-            {expanded ? (
-
-              <ChevronUp
-                className="text-slate-400"
-                size={22}
-              />
-
-            ) : (
-
-              <ChevronDown
-                className="text-slate-400"
-                size={22}
-              />
-
-            )}
-
-          </div>
-
-        </div>
-
-        {/* Progress */}
-
-        <div className="mt-5">
-
-          <ProgressBar score={score} />
-
-        </div>
-
-      </button>
-
-      {/* DETAILS WILL COME IN PART 2 */}
-      {expanded && (
-
-          <ExpandedSection
-
-              strength={strength}
-
-              weakness={weakness}
-
-              evidence={evidence}
-
-              improvement={improvement}
-
-          />
-
-      )}
-
-    </div>
-
-  );
-
 };
 
 /* -------------------------------- */
@@ -276,24 +90,24 @@ const DetailRow = ({
   iconColor,
 }) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-3">
 
-      <div className="mt-1">
-
+      {/* Icon */}
+      <div className="mt-0.5 shrink-0">
         {icon}
-
       </div>
 
-      <div>
+      {/* Content */}
+      <div className="min-w-0">
 
         <h4
-          className={`font-semibold ${iconColor}`}
+          className={`text-sm font-semibold ${iconColor}`}
         >
           {title}
         </h4>
 
-        <p className="text-slate-600 leading-7 mt-1">
-          {value}
+        <p className="text-sm text-slate-600 leading-6 mt-0.5">
+          {value || "Not available."}
         </p>
 
       </div>
@@ -313,54 +127,57 @@ const ExpandedSection = ({
   improvement,
 }) => {
   return (
+    <div className="border-t border-slate-200 bg-slate-50/70 px-5 py-4">
 
-    <div className="px-6 pb-6 pt-2 border-t border-slate-100 bg-slate-50 animate-in fade-in duration-300">
+      <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
 
-      <div className="space-y-6 mt-5">
-
+        {/* Strength */}
         <DetailRow
           title="Strength"
           value={strength}
           icon={
             <BadgeCheck
               className="text-emerald-500"
-              size={20}
+              size={18}
             />
           }
           iconColor="text-emerald-600"
         />
 
+        {/* Weakness */}
         <DetailRow
           title="Weakness"
           value={weakness}
           icon={
             <AlertTriangle
               className="text-red-500"
-              size={20}
+              size={18}
             />
           }
           iconColor="text-red-600"
         />
 
+        {/* Evidence */}
         <DetailRow
           title="Evidence"
           value={evidence}
           icon={
             <Quote
               className="text-blue-500"
-              size={20}
+              size={18}
             />
           }
           iconColor="text-blue-600"
         />
 
+        {/* Improvement */}
         <DetailRow
           title="Improvement"
           value={improvement}
           icon={
             <Lightbulb
               className="text-amber-500"
-              size={20}
+              size={18}
             />
           }
           iconColor="text-amber-600"
@@ -369,7 +186,152 @@ const ExpandedSection = ({
       </div>
 
     </div>
+  );
+};
 
+/* -------------------------------- */
+/* Dimension Item                   */
+/* -------------------------------- */
+
+const DimensionItem = ({
+  title,
+  score,
+  strength,
+  weakness,
+  evidence,
+  improvement,
+}) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const safeScore = Math.min(
+    Math.max(score || 0, 0),
+    100
+  );
+
+  return (
+    <div
+      className="
+        rounded-2xl
+        border
+        border-slate-200
+        bg-white
+        overflow-hidden
+        transition-all
+        duration-200
+        hover:border-slate-300
+        hover:shadow-sm
+      "
+    >
+
+      {/* Header */}
+      <button
+        type="button"
+        onClick={() => setExpanded(!expanded)}
+        className="
+          w-full
+          px-4
+          py-3.5
+          text-left
+          transition
+          hover:bg-slate-50/70
+        "
+      >
+
+        <div className="flex items-center justify-between gap-5">
+
+          {/* Left */}
+          <div className="flex items-center gap-3 min-w-0">
+
+            {/* Icon */}
+            <div
+              className="
+                w-9
+                h-9
+                rounded-xl
+                bg-slate-50
+                border
+                border-slate-100
+                flex
+                items-center
+                justify-center
+                shrink-0
+              "
+            >
+              {getIcon(title)}
+            </div>
+
+            {/* Title */}
+            <div className="min-w-0">
+
+              <h3 className="text-sm font-semibold text-slate-800 truncate">
+                {title}
+              </h3>
+
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                AI competency score
+              </p>
+
+            </div>
+
+          </div>
+
+          {/* Right */}
+          <div className="flex items-center gap-3 shrink-0">
+
+            <div className="text-right">
+
+              <span
+                className={`text-xl font-bold ${getScoreColor(
+                  safeScore
+                )}`}
+              >
+                {safeScore}
+              </span>
+
+              <span className="text-xs text-slate-400 ml-0.5">
+                /100
+              </span>
+
+            </div>
+
+            <div className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center">
+
+              {expanded ? (
+                <ChevronUp
+                  size={17}
+                  className="text-slate-400"
+                />
+              ) : (
+                <ChevronDown
+                  size={17}
+                  className="text-slate-400"
+                />
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Progress */}
+        <div className="mt-3">
+          <ProgressBar score={safeScore} />
+        </div>
+
+      </button>
+
+      {/* Expanded Details */}
+      {expanded && (
+        <ExpandedSection
+          strength={strength}
+          weakness={weakness}
+          evidence={evidence}
+          improvement={improvement}
+        />
+      )}
+
+    </div>
   );
 };
 
@@ -381,21 +343,28 @@ const DimensionBreakdown = ({
   dimensions = [],
 }) => {
   return (
-
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+    <div
+      className="
+        bg-white
+        rounded-3xl
+        border
+        border-slate-200
+        shadow-sm
+        p-6
+      "
+    >
 
       {/* Header */}
-
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-5">
 
         <div>
 
-          <h2 className="text-3xl font-bold text-slate-900">
+          <h2 className="text-xl font-bold tracking-tight text-slate-900">
             Performance Breakdown
           </h2>
 
-          <p className="text-slate-500 mt-2">
-            AI evaluation across interview competencies
+          <p className="text-xs text-slate-500 mt-1">
+            Detailed AI evaluation across interview competencies
           </p>
 
         </div>
@@ -403,34 +372,23 @@ const DimensionBreakdown = ({
       </div>
 
       {/* Dimensions */}
-
-      <div className="space-y-3">
+      <div className="space-y-2.5">
 
         {dimensions.map((item) => (
-
           <DimensionItem
-
             key={item.title}
-
             title={item.title}
-
             score={item.score}
-
             strength={item.strength}
-
             weakness={item.weakness}
-
             evidence={item.evidence}
-
             improvement={item.improvement}
-
           />
-
         ))}
 
       </div>
-    </div>
 
+    </div>
   );
 };
 

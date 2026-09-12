@@ -1,117 +1,242 @@
-import {RotateCcw,ArrowRight,Home,Save} from "lucide-react";
+import {
+  RotateCcw,
+  ArrowRight,
+  Home,
+  Save,
+} from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
 
 const ActionButtons = () => {
-
   const navigate = useNavigate();
 
+  // Practice the same question again
   const handlePracticeAgain = () => {
-    navigate(-1);
+    navigate("/startRecording", { replace: true });
   };
 
+  // Start another interview question
   const handleNewQuestion = () => {
-    navigate("/practice");
+    navigate("/questions", { replace: true });
   };
 
+  // Go back to dashboard
   const handleDashboard = () => {
-    navigate("/homepage");
+    navigate("/homepage", { replace: true });
   };
 
   return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
+    <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-6">
 
-      {/* Practice Again */}
-
+      {/* Practice Same Question */}
       <button
+        type="button"
         onClick={handlePracticeAgain}
-        className="bg-white border border-slate-200 rounded-3xl p-6 flex items-center justify-center gap-4 hover:border-indigo-300 hover:shadow-md transition-all duration-300"
+        className="
+          group
+          bg-white
+          border
+          border-slate-200
+          rounded-2xl
+          px-4
+          py-4
+          flex
+          items-center
+          gap-3
+          text-left
+          transition-all
+          duration-200
+          hover:border-indigo-300
+          hover:shadow-sm
+        "
       >
-        <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-          <RotateCcw size={22} />
+        <div
+          className="
+            w-10
+            h-10
+            rounded-xl
+            bg-slate-100
+            flex
+            items-center
+            justify-center
+            shrink-0
+            transition
+            group-hover:bg-indigo-50
+          "
+        >
+          <RotateCcw
+            size={19}
+            className="
+              text-slate-600
+              group-hover:text-indigo-600
+              transition-colors
+            "
+          />
         </div>
 
-        <div className="text-left">
-          <h3 className="font-semibold text-lg text-slate-900">
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-slate-900">
             Practice Same Question
           </h3>
 
-          <p className="text-slate-500 text-sm">
+          <p className="text-xs text-slate-500 mt-0.5">
             Apply feedback and try again
           </p>
         </div>
       </button>
 
-      {/* New Question */}
 
+      {/* Try Another Question */}
       <button
+        type="button"
         onClick={handleNewQuestion}
-        className="bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-3xl p-6 flex items-center justify-center gap-4 text-white shadow-lg hover:scale-[1.01] transition-all duration-300"
+        className="
+          group
+          rounded-2xl
+          px-4
+          py-4
+          flex
+          items-center
+          gap-3
+          text-left
+          text-white
+          bg-gradient-to-r
+          from-indigo-600
+          to-cyan-500
+          shadow-sm
+          transition-all
+          duration-200
+          hover:shadow-md
+          hover:-translate-y-0.5
+        "
       >
-        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-          <ArrowRight size={22} />
+        <div
+          className="
+            w-10
+            h-10
+            rounded-xl
+            bg-white/15
+            flex
+            items-center
+            justify-center
+            shrink-0
+          "
+        >
+          <ArrowRight size={19} />
         </div>
 
-        <div className="text-left">
-          <h3 className="font-semibold text-lg">
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold">
             Try Another Question
           </h3>
 
-          <p className="text-white/80 text-sm">
-            Continue improving your interview skills
+          <p className="text-xs text-white/75 mt-0.5">
+            Continue your interview practice
           </p>
         </div>
       </button>
 
-       {/* Saved Status */}
 
-      <div className="bg-emerald-600 rounded-3xl p-6 flex items-center justify-center gap-4 text-white shadow-lg">
-        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-            <Save size={22} />
-        </div>
-
-        <div className="text-left">
-            <h3 className="font-semibold text-lg">
-            Report Saved
-            </h3>
-
-            <p className="text-white/80 text-sm">
-            Interview stored successfully
-            </p>
-        </div>
-    </div>
-
-    <button
-        onClick={handleDashboard}
+      {/* Saved Status */}
+      <div
         className="
-            bg-white
-            border
-            border-slate-200
-            rounded-3xl
-            p-6
+          rounded-2xl
+          px-4
+          py-4
+          flex
+          items-center
+          gap-3
+          bg-emerald-50
+          border
+          border-emerald-100
+        "
+      >
+        <div
+          className="
+            w-10
+            h-10
+            rounded-xl
+            bg-emerald-100
             flex
             items-center
             justify-center
-            gap-4
-            hover:border-indigo-300
-            hover:shadow-md
-            transition-all
-            duration-300
+            shrink-0
+          "
+        >
+          <Save
+            size={19}
+            className="text-emerald-600"
+          />
+        </div>
+
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-emerald-700">
+            Report Saved
+          </h3>
+
+          <p className="text-xs text-emerald-600/80 mt-0.5">
+            Interview stored successfully
+          </p>
+        </div>
+      </div>
+
+
+      {/* Dashboard */}
+      <button
+        type="button"
+        onClick={handleDashboard}
+        className="
+          group
+          bg-white
+          border
+          border-slate-200
+          rounded-2xl
+          px-4
+          py-4
+          flex
+          items-center
+          gap-3
+          text-left
+          transition-all
+          duration-200
+          hover:border-indigo-300
+          hover:shadow-sm
         "
-    >
-        <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-            <Home size={22} />
+      >
+        <div
+          className="
+            w-10
+            h-10
+            rounded-xl
+            bg-slate-100
+            flex
+            items-center
+            justify-center
+            shrink-0
+            transition
+            group-hover:bg-indigo-50
+          "
+        >
+          <Home
+            size={19}
+            className="
+              text-slate-600
+              group-hover:text-indigo-600
+              transition-colors
+            "
+          />
         </div>
 
-        <div className="text-left">
-            <h3 className="font-semibold text-lg text-slate-900">
-                Dashboard
-            </h3>
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-slate-900">
+            Dashboard
+          </h3>
 
-            <p className="text-slate-500 text-sm">
-                Return to your home page
-            </p>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Return to your home page
+          </p>
         </div>
-    </button>
+      </button>
 
     </div>
   );

@@ -16,7 +16,8 @@ const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
       if (loading) return;
 
       if (!userId) {
-        navigate("/login");
+        navigate("/", { replace: true });
+        
         return;
       }
 
@@ -28,7 +29,7 @@ const QuestionCard = ({id, q, selectedId, setSelectedId }) => {
 
       });
       
-      navigate("/startRecording");
+      navigate("/startRecording", { replace: true });
     };
     return(
     <div

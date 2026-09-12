@@ -2,49 +2,118 @@ import userModel from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 // import axios from "axios";  //Used to make HTTP request to Google API
-import { oauth2client } from "../utils/googleConfig.js"; 
+import { oauth2client } from "../utils/googleConfig.js";
 
-export const signup = async(req,res)=>{
-    try{
-        console.log("signup started\n");
-        const{name,email,password}=req.body;
-
-        if(!name || !email || !password){
-            return res.status(400).json({message: "All fields are required"});  //Backend validation = Security
-        }
-        
-        const existingUser=await userModel.findOne({email})
-        if(existingUser){
-            return res.status(400).json({message:"User already Exist"});
-        }
-
-        const hashedpass=await bcrypt.hash(password,10);
-
-        const user=await userModel.create({
+export const signup = async (req, res) => {
+    try {
+        const {
             name,
             email,
-            password:hashedpass
+            password,
+            verificationToken
+        } = req.body;
+
+        // 1. Required fields
+        if (
+            !name ||
+            !email ||
+            !password ||
+            !verificationToken
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required."
+            });
+        }
+
+        const normalizedEmail =
+            email.trim().toLowerCase();
+
+        // 2. Verify signup verification token
+        let decoded;
+
+        try {
+            decoded = jwt.verify(
+                verificationToken,
+                process.env.JWT_SECRET
+            );
+        } catch (error) {
+            return res.status(401).json({
+                success: false,
+                message:
+                    "Email verification has expired. Please verify your email again."
+            });
+        }
+
+        // 3. Make sure this token is for signup
+        if (decoded.purpose !== "SIGNUP") {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid verification token."
+            });
+        }
+
+        // 4. Make sure token email matches signup email
+        if (
+            decoded.email !== normalizedEmail
+        ) {
+            return res.status(401).json({
+                success: false,
+                message:
+                    "Email verification does not match."
+            });
+        }
+
+        // 5. Check whether user already exists
+        const existingUser =
+            await userModel.findOne({
+                email: normalizedEmail
+            });
+
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "User already exists."
+            });
+        }
+
+        // 6. Hash password
+        const hashedPassword =
+            await bcrypt.hash(password, 10);
+
+        // 7. Create user
+        const user = await userModel.create({
+            name: name.trim(),
+            email: normalizedEmail,
+            password: hashedPassword
         });
 
-        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'7d'});
-        res.cookie("token",token, {
-            httpOnly:true,      //httpOnly → prevents JS access (security)
-            secure:false,       // secure → HTTPS only (prod)- if true
-            sameSite:"lax"      // sameSite → prevents Cross-Site Request Forgery (CSRF) 
+        return res.status(201).json({
+            success: true,
+            message: "Account created successfully.",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
         });
 
-        res.status(201).json({
-            message:"User Registered Successfully",
-            
-        })
-    }catch(err){
-        console.error(err);
-        res.status(500).json({message:"Server Error"})
+    } catch (error) {
+
+        console.error(
+            "Signup error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Signup failed."
+        });
     }
 };
 
-export const login=async (req,res)=>{
-    try{
+export const login = async (req, res) => {
+    try {
         console.log("login started\n");
         // const existingToken=req.cookies.token;
         // if(existingToken){
@@ -58,42 +127,43 @@ export const login=async (req,res)=>{
         //     }
         // }
 
-        const{email,password}=req.body;
+        const { email, password } = req.body;
 
-        const user=await userModel.findOne({email});
-        if(!user){
+        const user = await userModel.findOne({ email });
+        if (!user) {
             console.log("User Not Exist");
-            return res.status(400).json({message:"User Not Exist"});}
-
-        const isMatch=await bcrypt.compare(password,user.password);
-
-        if(!isMatch){
-            console.log("INcorrect Password");
-            return res.status(400).json({message:"Wrong Password"});
+            return res.status(400).json({ message: "User Not Exist" });
         }
 
-        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
-        res.cookie("token",token, {
-            httpOnly:true,      //httpOnly → prevents JS access (security)
-            secure:false,       // secure → HTTPS only (prod)- if true
-            sameSite:"lax"      // sameSite → prevents Cross-Site Request Forgery (CSRF) 
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            console.log("INcorrect Password");
+            return res.status(400).json({ message: "Wrong Password" });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        res.cookie("token", token, {
+            httpOnly: true,      //httpOnly → prevents JS access (security)
+            secure: false,       // secure → HTTPS only (prod)- if true
+            sameSite: "lax"      // sameSite → prevents Cross-Site Request Forgery (CSRF) 
         });
 
         res.status(200).json({
-            message:"User LoggedIn Successfully",
+            message: "User LoggedIn Successfully",
         })
     }
-    catch(err){
+    catch (err) {
         console.log("Actual Error:", err); // 🔥 VERY IMPORTANT
-        res.status(500).json({message:"Server Error"});
+        res.status(500).json({ message: "Server Error" });
     }
 };
 
-export const googleAuth = async (req,res)=>{    //Used to make HTTP request to Google API, Called when frontend hits: POST /auth/google
-    try{
+export const googleAuth = async (req, res) => {    //Used to make HTTP request to Google API, Called when frontend hits: POST /auth/google
+    try {
         console.log("google auth started\n");
 
-        const {token}=req.body;     //This is NOT user data, only a temporary token
+        const { token } = req.body;     //This is NOT user data, only a temporary token
 
         // 🔥 Get user data from Google using Axios, THIS IS FIXED METHOD TO EXTRACT EMAIL,PASS, PROFILE ETC
         // const googleRes = await axios.get(
@@ -103,97 +173,101 @@ export const googleAuth = async (req,res)=>{    //Used to make HTTP request to G
         // const data=googleRes.data;      //Axios stores actual response inside .data
         // const{sub,email,name,picture}=data;
 
-        const ticket=await oauth2client.verifyIdToken({
-            idToken:token,
-            audience:process.env.GOOGLE_CLIENT_ID,
+        const ticket = await oauth2client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
         });
 
         const payload = ticket.getPayload();
 
-        const {sub,email,name,picture,email_verified}=payload;
+        const { sub, email, name, picture, email_verified } = payload;
 
         // Extra Safety Check
-        if(!email_verified){
-            return res.status(400).json({message:"Email Not Verified"});
+        if (!email_verified) {
+            return res.status(400).json({ message: "Email Not Verified" });
         }
 
-        let user = await userModel.findOne({email});
-        if(!user){
-            user=await userModel.create({email,name,googleId:sub,avatar:picture,password:null});
+        let user = await userModel.findOne({ email });
+        if (!user) {
+            user = await userModel.create({ email, name, googleId: sub, avatar: picture, password: null });
         }
         // 🔗 Optional: 👉 Case: User signed up manually before Now logs in via Google
-        if(user && !user.googleId){
-            user.googleId=sub;
+        if (user && !user.googleId) {
+            user.googleId = sub;
             await user.save();  //Link both accounts together 🔗
         }
 
         //Genereate JWT
-        const jwtToken=jwt.sign({id:user._id},process.env.JWT_SECRET);
+        const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-        res.cookie("token",jwtToken);
+        res.cookie("token", jwtToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         res.status(200).json({
-            message:"Google Login Successfull",
-            token:jwtToken,
-            user:{
-                id:user._id,
-                email:user.email,
-                name:user.name,
-                avatar:user.avatar
+            message: "Google Login Successfull",
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
+                avatar: user.avatar
             }
         });
 
-    }catch(err){
-        console.log("Google Auth Error: ",err.response?.data || err.message);
-        res.status(500).json({message:"server Error"});
+    } catch (err) {
+        console.log("Google Auth Error: ", err.response?.data || err.message);
+        res.status(500).json({ message: "server Error" });
     }
 };
 
 export const getMe = async (req, res) => {
-  try {
-    // 🔥 Get token from cookie
-    const token = req.cookies.token;
-    console.log("getMe token:", token); // 🔥 DEBUG: Check if token is received
-    if (!token) {
-      return res.status(401).json({ message: "Not authenticated" });
+    try {
+        // 🔥 Get token from cookie
+        const token = req.cookies.token;
+        console.log("getMe token:", token); // 🔥 DEBUG: Check if token is received
+        if (!token) {
+            return res.status(401).json({ message: "Not authenticated" });
+        }
+
+        // 🔐 Verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // 🧠 Get user from DB
+        const user = await userModel.findById(decoded.id).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // ✅ Send user
+        res.status(200).json({
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar,
+            },
+        });
+
+    } catch (err) {
+        console.log("GET ME ERROR:", err.message);
+        res.status(401).json({ message: "Invalid or expired token" });
     }
-
-    // 🔐 Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // 🧠 Get user from DB
-    const user = await userModel.findById(decoded.id).select("-password");
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // ✅ Send user
-    res.status(200).json({
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-      },
-    });
-
-  } catch (err) {
-    console.log("GET ME ERROR:", err.message);
-    res.status(401).json({ message: "Invalid or expired token" });
-  }
 };
 
-export const logout = async (req,res)=>{
-    try{
-        res.clearCookie("token",{
-            httpOnly:true,      //httpOnly → prevents JS access (security)
-            secure:false,       // secure → HTTPS only (prod)- if true
-            sameSite:"lax"      // sameSite → prevents Cross-Site Request Forgery (CSRF) 
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,      //httpOnly → prevents JS access (security)
+            secure: false,       // secure → HTTPS only (prod)- if true
+            sameSite: "lax"      // sameSite → prevents Cross-Site Request Forgery (CSRF) 
         });
-        return res.status(200).json({message:"Logged Out Successfully"});
+        return res.status(200).json({ message: "Logged Out Successfully" });
     }
-    catch(err){
-        return res.status(500).json({message:"Something went wrong"})
+    catch (err) {
+        return res.status(500).json({ message: "Something went wrong" })
     }
 };

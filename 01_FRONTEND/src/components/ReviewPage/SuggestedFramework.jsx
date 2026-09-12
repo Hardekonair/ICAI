@@ -2,41 +2,56 @@ import { Lightbulb } from "lucide-react";
 
 const SuggestedFramework = ({ framework }) => {
   return (
-    <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
 
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <Lightbulb
-          size={28}
-          className="text-indigo-600"
-        />
+      <div className="flex items-center gap-3 mb-5">
 
-        <h2 className="text-3xl font-bold text-slate-900">
-          Suggested Answer Framework
-        </h2>
-      </div>
-
-      {/* Framework Box */}
-      <div className="bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100 rounded-2xl p-8">
+        <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
+          <Lightbulb
+            size={19}
+            className="text-indigo-600"
+          />
+        </div>
 
         <div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-3">
-            {framework?.title}
-          </h3>
+          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+            Suggested Answer Framework
+          </h2>
 
-          <p className="text-slate-700 leading-9 text-lg whitespace-pre-line">
-            {framework?.description}
+          <p className="text-xs text-slate-500 mt-0.5">
+            A recommended structure for answering this question
           </p>
         </div>
 
       </div>
 
-      {/* Tip */}
-      <div className="mt-6 p-4 rounded-xl bg-indigo-50 border border-indigo-100">
+      {/* Framework */}
+      <div className="rounded-2xl bg-gradient-to-r from-indigo-50/80 to-cyan-50/80 border border-indigo-100 p-5">
 
-        <p className="text-indigo-700 font-medium">
-          💡 Use this structure as a guide, then personalize it with
-          your own experiences and achievements.
+        {/* Framework Title */}
+        <h3 className="text-base font-bold text-slate-900 mb-2">
+          {framework?.title || "Recommended Framework"}
+        </h3>
+
+        {/* Description */}
+        <p className="text-sm text-slate-700 leading-6 whitespace-pre-line">
+          {framework?.description || "No framework available."}
+        </p>
+
+      </div>
+
+      {/* Tip */}
+      <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-indigo-50/70 border border-indigo-100 px-4 py-3">
+
+        <Lightbulb
+          size={17}
+          className="text-indigo-600 mt-0.5 shrink-0"
+        />
+
+        <p className="text-xs text-indigo-700 leading-5">
+          Use this structure as a guide, then personalize it with your
+          own experiences and achievements.
         </p>
 
       </div>

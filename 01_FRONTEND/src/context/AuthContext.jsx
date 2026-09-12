@@ -29,6 +29,18 @@ export const AuthProvider=({children})=>{   // {Childern} is a special prop that
         fetchUser();
     },[]);
 
+    useEffect(() => {
+        const handleAuthExpired = () => {
+            setuser(null);
+        };
+
+        window.addEventListener("auth:expired", handleAuthExpired);
+
+        return () => {
+            window.removeEventListener("auth:expired", handleAuthExpired);
+        };
+    }, []);
+
     // This will render the components wrapped inside AuthProvider in App.jsx and provide them access to user and setUser through context
     // This makes user, setUser and loading available to any component that consumes this context
     const userId=user?.id ?? user?._id ?? null;

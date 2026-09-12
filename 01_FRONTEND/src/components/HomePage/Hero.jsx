@@ -16,7 +16,7 @@ const Hero = ({ dashboard }) => {
         </p>
 
         <h2 className="text-2xl font-bold">
-          Good morning, there!
+          Good morning, {dashboard?.user?.name ?? "there"}
         </h2>
 
         <p className="text-sm opacity-90">

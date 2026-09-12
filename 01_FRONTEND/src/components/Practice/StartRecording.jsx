@@ -54,6 +54,27 @@ const StartRecording = () => {
   // for audio waves
   const [waveData, setwaveData] = useState(Array(20).fill(5));
 
+
+  // Prevent accidental page reload/close while recording
+useEffect(() => {
+  const handleBeforeUnload = (event) => {
+    const recordingActive =
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive";
+
+    if (recordingActive) {
+      event.preventDefault();
+      event.returnValue = "";
+    }
+  };
+
+  window.addEventListener("beforeunload", handleBeforeUnload);
+
+  return () => {
+    window.removeEventListener("beforeunload", handleBeforeUnload);
+  };
+}, []);
+
   //  FOR SAVING SESSION DATA AND QUESTION, Create loadQuestion()
   const loadQuestion = async () =>{
     
@@ -332,7 +353,7 @@ const StartRecording = () => {
           createdAt: Date.now(),
         });
         
-        navigate("/analyze");
+        navigate("/analyze", { replace: true });
       };
 
 
@@ -414,8 +435,10 @@ const StartRecording = () => {
 
     stopMediaTracks();
     cancelAnimationFrame(animationRef.current);
-    navigate("/questions");
+    navigate("/questions", { replace: true });
   };
+
+  
 
   /*
     -----------------------------------

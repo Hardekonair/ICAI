@@ -2,56 +2,158 @@ import { Target, Check } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function WeeklyGoal({ goal }) {
-  console.log("WEEKLY GOAL:", goal);
 
-  const total = goal?.target ?? 5;
-  const finalProgress = goal?.completed ?? 0;
+  // -----------------------------------------
+  // TODAY'S GOAL
+  // -----------------------------------------
 
-  const [progress, setProgress] = useState(0);
+  const total =
+    goal?.target ?? 5;
+
+  const finalProgress =
+    goal?.completed ?? 0;
+
+
+  // -----------------------------------------
+  // EACH DAY'S SESSION COUNT
+  //
+  // [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+  // -----------------------------------------
+
+  const dailySessions =
+    goal?.dailySessions ??
+    [0, 0, 0, 0, 0, 0, 0];
+
+
+  // -----------------------------------------
+  // Animated today's progress
+  // -----------------------------------------
+
+  const [progress, setProgress] =
+    useState(0);
+
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setProgress(finalProgress);
-    }, 200);
 
-    return () => clearTimeout(timer);
+    const timer =
+      setTimeout(() => {
+
+        setProgress(
+          finalProgress
+        );
+
+      }, 200);
+
+
+    return () =>
+      clearTimeout(timer);
+
   }, [finalProgress]);
 
-  // Overall weekly progress
-  const percentage = Math.min((progress / total) * 100, 100);
+
+  // -----------------------------------------
+  // TODAY'S CIRCLE PERCENTAGE
+  // -----------------------------------------
+
+  const percentage =
+    Math.min(
+      (progress / total) * 100,
+      100
+    );
+
+
+  // -----------------------------------------
+  // SVG CIRCLE
+  // -----------------------------------------
 
   const radius = 70;
+
   const stroke = 10;
-  const normalizedRadius = radius - stroke * 0.5;
-  const circumference = normalizedRadius * 2 * Math.PI;
+
+  const normalizedRadius =
+    radius -
+    stroke * 0.5;
+
+  const circumference =
+    normalizedRadius *
+    2 *
+    Math.PI;
+
 
   const strokeDashoffset =
-    circumference - (percentage / 100) * circumference;
+    circumference -
+    (percentage / 100) *
+      circumference;
 
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  // Example: [5] means Saturday was practiced
-  const practicedDays = goal?.practicedDays ?? [];
+  // -----------------------------------------
+  // DAYS
+  // -----------------------------------------
+
+  const days = [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun",
+  ];
+
+
+  // JS:
+  // Sunday = 0
+  // Monday = 1
+  //
+  // Convert:
+  // Monday = 0
+  // Tuesday = 1
+  // ...
+  // Sunday = 6
+
+  const todayIndex =
+    (new Date().getDay() + 6) %
+    7;
+
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm w-full">
 
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-2">
-        <Target className="text-indigo-500" size={20} />
+    <div className="w-full rounded-2xl bg-white p-5 shadow-sm">
 
-        <h3 className="font-semibold text-lg">
+
+      {/* ================================= */}
+      {/* HEADER */}
+      {/* ================================= */}
+
+      <div className=" flex items-center gap-2">
+
+        <Target
+          className="text-indigo-500"
+          size={20}
+        />
+
+        <h3 className="text-lg font-semibold">
           Daily Goal
         </h3>
+
       </div>
 
-      {/* Circular Chart */}
-      <div className="flex justify-center mb-1">
-        <div className="relative w-26 h-28 md:w-32 md:h-32">
 
-          <svg viewBox="0 0 160 160">
+      {/* ================================= */}
+      {/* CIRCULAR PROGRESS */}
+      {/* ================================= */}
+
+      <div className=" flex justify-center">
+
+        <div className="relative h-28 w-28 md:h-32 md:w-32">
+
+          <svg
+            viewBox="0 0 160 160"
+            className="h-full w-full"
+          >
 
             {/* Background */}
+
             <circle
               stroke="#e5e7eb"
               fill="transparent"
@@ -61,102 +163,188 @@ export default function WeeklyGoal({ goal }) {
               cy="80"
             />
 
+
             {/* Gradient */}
+
             <defs>
-              <linearGradient id="goalGradient">
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="100%" stopColor="#06b6d4" />
+
+              <linearGradient
+                id="goalGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+
+                <stop
+                  offset="0%"
+                  stopColor="#6366f1"
+                />
+
+                <stop
+                  offset="100%"
+                  stopColor="#06b6d4"
+                />
+
               </linearGradient>
+
             </defs>
 
+
             {/* Progress */}
+
             <circle
               stroke="url(#goalGradient)"
               fill="transparent"
               strokeWidth={stroke}
               strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
+              strokeDasharray={
+                circumference
+              }
+              strokeDashoffset={
+                strokeDashoffset
+              }
               r={normalizedRadius}
               cx="80"
               cy="80"
               style={{
-                transition: "stroke-dashoffset 0.8s ease",
-                transform: "rotate(-90deg)",
-                transformOrigin: "50% 50%",
+                transition:
+                  "stroke-dashoffset 0.8s ease",
+                transform:
+                  "rotate(-90deg)",
+                transformOrigin:
+                  "50% 50%",
               }}
             />
 
           </svg>
 
+
           {/* Center text */}
+
           <div className="absolute inset-0 flex flex-col items-center justify-center">
 
-            <span className="text-2xl md:text-3xl font-bold">
+            <span className="text-2xl font-bold md:text-3xl">
               {progress}/{total}
             </span>
 
-            <span className="text-gray-500 text-sm">
+            <span className="text-sm text-gray-500">
               sessions
             </span>
 
           </div>
 
         </div>
+
       </div>
 
-      {/* Daily Progress */}
+
+      {/* ================================= */}
+      {/* DAILY BREAKDOWN */}
+      {/* ================================= */}
+
       <div className="space-y-2">
 
         {days.map((day, i) => {
 
-          const done = practicedDays.includes(i);
+          // Number of sessions
+          // done on THIS day
+
+          const daySessions =
+            dailySessions[i] ?? 0;
+
+
+          // Bar percentage
+          //
+          // 5 sessions = 100%
+          // 2 sessions = 40%
+          // 6 sessions = 100%
+
+          const dayPercentage =
+            Math.min(
+              (daySessions / total) *
+                100,
+              100
+            );
+
+
+          const done =
+            daySessions > 0;
+
+
+          const isToday =
+            i === todayIndex;
+
 
           return (
+
             <div
               key={day}
               className="flex items-center gap-3"
             >
 
-              {/* Day */}
-              <span className="w-10 text-sm text-gray-500">
+              {/* ------------------------- */}
+              {/* DAY */}
+              {/* ------------------------- */}
+
+              <span
+                className={`w-10 text-sm ${
+                  isToday
+                    ? "font-semibold text-indigo-500"
+                    : "text-gray-500"
+                }`}
+              >
                 {day}
               </span>
 
-              {/* Progress Bar */}
-              <div className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+
+              {/* ------------------------- */}
+              {/* PROGRESS BAR */}
+              {/* ------------------------- */}
+
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray-200">
 
                 <div
-                  className={`h-full rounded-full transition-all duration-700 ${
-                    done
-                      ? "bg-gradient-to-r from-indigo-500 to-cyan-500"
-                      : "w-0"
-                  }`}
+                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 transition-all duration-700"
                   style={{
-                    width: done ? `${percentage}%` : "0%",
+                    width:
+                      `${dayPercentage}%`,
                   }}
                 />
 
               </div>
 
-              {/* Status */}
+
+              {/* ------------------------- */}
+              {/* STATUS */}
+              {/* ------------------------- */}
+
               {done ? (
-                <div className="w-4 h-4 flex items-center justify-center rounded-full border-2 border-green-500">
+
+                <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-green-500">
+
                   <Check
                     size={12}
                     className="text-green-500"
                   />
+
                 </div>
+
               ) : (
-                <div className="w-5 h-5 rounded-full border-2 border-gray-300" />
+
+                <div className="h-5 w-5 rounded-full border-2 border-gray-300" />
+
               )}
 
             </div>
+
           );
+
         })}
 
       </div>
 
     </div>
+
   );
 }

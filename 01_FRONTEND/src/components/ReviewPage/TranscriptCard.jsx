@@ -6,42 +6,68 @@ const TranscriptCard = ({
   pace,
 }) => {
   return (
-    <div className="bg-white rounded-3xl shadow-sm p-6 flex flex-col h-full">
+    <div className="bg-white rounded-3xl shadow-sm p-4 flex flex-col h-[260px] min-w-0">
 
-      <h2 className="font-bold text-2xl mb-4">
-        Annotated Transcript
-      </h2>
+<div className="flex items-center gap-3 mb-3 shrink-0">
 
-      <div className="flex flex-wrap gap-3 mb-5">
+  <div className="w-1 h-6 rounded-full bg-indigo-600" />
 
-        <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
-          Filler word
-        </span>
+  <h2 className="
+    text-xl
+    font-semibold
+    tracking-tight
+    text-slate-800
+  ">
+    Annotated Transcript
+  </h2>
 
-        <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-          Hedge word
-        </span>
+</div>
 
-        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-          Strong word
-        </span>
+      {/* SCROLLABLE TRANSCRIPT */}
+      <div className="flex-1 min-h-0 min-w-0 overflow-y-auto overflow-x-hidden pr-3">
 
-      </div>
+  <p className="text-xs leading-5 text-slate-700 break-words whitespace-pre-wrap">
+    {transcript}
+  </p>
 
-      <div className="flex-1 overflow-y-auto">
+</div>
 
-        <p className="text-lg leading-9 text-slate-700">
-          {transcript}
-        </p>
+<div className="pt-2  border-t border-slate-200 shrink-0 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
 
-      </div>
+  <span className="text-slate-500">
+    <span className="font-semibold text-slate-800">
+      {words}
+    </span>{" "}
+    words
+  </span>
 
-      <p className="pt-4 border-t border-slate-200">
+  <span className="text-slate-300">•</span>
 
-        {words} words spoken across {sentences} sentence(s)
-        at ~{pace} wpm. {fillerWords} filler words detected.
+  <span className="text-slate-500">
+    <span className="font-semibold text-slate-800">
+      {sentences}
+    </span>{" "}
+    sentences
+  </span>
 
-      </p>
+  <span className="text-slate-300">•</span>
+
+  <span className="text-slate-500">
+    <span className="font-semibold text-indigo-600">
+      {pace} WPM
+    </span>
+  </span>
+
+  <span className="text-slate-300">•</span>
+
+  <span className="text-slate-500">
+    <span className="font-semibold text-amber-600">
+      {fillerWords}
+    </span>{" "}
+    fillers
+  </span>
+
+</div>
 
     </div>
   );

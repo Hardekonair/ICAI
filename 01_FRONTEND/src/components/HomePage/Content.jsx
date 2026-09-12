@@ -67,7 +67,7 @@ const Content = () => {
 
               <SkillBreakdown skillsData={dashboard.skills} />
 
-              <WeeklyGoal goal={dashboard.weeklyGoal} />
+              <WeeklyGoal goal={dashboard.dailyGoal} />
 
             </div>
             <AboutSection/>

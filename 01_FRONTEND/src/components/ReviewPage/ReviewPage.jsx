@@ -1,4 +1,4 @@
-import { useParams  } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReviewHeader from "./ReviewHeader";
 import VideoSection from "./VideoSection";
 import TranscriptCard from "./TranscriptCard";
@@ -16,171 +16,175 @@ import { getInterviewSession } from "../../services/interviewApi";
 import ShowLoading from "../ShowLoading";
 
 const ReviewPage = () => {
-  const {sessionId} = useParams();
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const { sessionId } = useParams();
+    const [session, setSession] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+    useEffect(() => {
 
-      const loadSession = async () => {
+        const loadSession = async () => {
 
-          try {
+            try {
 
-              const response =
-                  await getInterviewSession(sessionId);
+                const response =
+                    await getInterviewSession(sessionId);
 
-              setSession(response.interview);
+                setSession(response.interview);
 
-          } catch (error) {
+            } catch (error) {
 
-              console.error(
-                  "Failed to load interview:",
-                  error
-              );
+                console.error(
+                    "Failed to load interview:",
+                    error
+                );
 
-          } finally {
+            } finally {
 
-              setLoading(false);
+                setLoading(false);
 
-          }
+            }
 
-      };
-      
-      loadSession();
-      
+        };
+
+        loadSession();
+
     }, [sessionId]);
-      
-      if (loading) {
+
+    if (loading) {
         return (
             <ShowLoading message="Loading your interview review..." />
         );
-      }
-      
-      if (!session) {
+    }
+
+    if (!session) {
         return <div>Interview not found.</div>;
-  }
-  
-  const {
-      question,
-      transcript,
-      analysis,
-      speechStats,
-      duration,
-      videoUrl
+    }
+
+    const {
+        question,
+        transcript,
+        analysis,
+        speechStats,
+        duration,
+        videoUrl
     } = session;
 
 
-  // console.log(analysis);
+    // console.log(analysis);
 
-  return (
-    
-    <div className="min-h-screen bg-[#f8fafc] pb-10">
+    return (
 
-      <ReviewHeader question={question} />
+        <div className="min-h-screen bg-[#f8fafc] pb-10  ">
 
-      <div className="max-w-7xl mx-auto px-6">
+            <ReviewHeader question={question} />
 
-        {/* VIDEO + TRANSCRIPT */}
+            <div className="max-w-5xl mx-auto px-9">
 
-        {/* ================= Interview Overview ================= */}
-        <div className="grid lg:grid-cols-[0.75fr_1fr] gap-6 mt-8">
+                {/* VIDEO + TRANSCRIPT */}
 
-          <VideoSection videoUrl={session.videoUrl} />
+                {/* ================= Interview Overview ================= */}
+                <div className="grid lg:grid-cols-[0.8fr_1fr_auto] gap-4 mt-4 items-stretch">
 
-          <TranscriptCard
-            transcript={transcript}
-          />
+                    {/* Video */}
+                    <div className="min-w-0">
+                        <VideoSection videoUrl={session.videoUrl} />
+                    </div>
 
-        </div>
+                    {/* Transcript */}
+                    <div className="min-w-0">
+                        <TranscriptCard
+                            transcript={transcript}
+                            fillerWords={speechStats?.fillerWords}
+                            words={speechStats?.words}
+                            sentences={speechStats?.sentences}
+                            pace={speechStats?.pace}
+                        />
+                    </div>
+
+                    {/* Overall Score - minimum required space */}
+                    <div className="w-[150px]">
+                        <ScoreCard
+                            score={analysis?.overallScore || 0}
+                        />
+                    </div>
+
+                </div>
 
 
 
-        {/* SUMMARY + DIMENSIONS */}
+                {/* SUMMARY + DIMENSIONS */}
 
-        <div className="grid lg:grid-cols-[1fr_1.34fr] gap-6 mt-6">
+                <div className="grid lg:grid-cols-[1fr_1fr] gap-4 mt-4 items-stretch">
 
-            {/* LEFT COLUMN */}
-            <div className="space-y-4">
+    {/* LEFT — Overall Feedback */}
+    <div className="min-w-0">
+        <OverallFeedbackCard
+            feedback={analysis?.overallFeedback}
+        />
+    </div>
 
-                <div className="grid grid-cols-2 gap-4">
+    {/* RIGHT — Competency Scores */}
+    <div className="min-w-0">
+        <DimensionSummaryCard
+            dimensions={analysis?.dimensions}
+        />
+    </div>
 
-                    <ScoreCard
-                        score={analysis?.overallScore || 0}
-                    />
+</div>
 
-                    <SpeechStatsCard
-                        stats={speechStats}
+
+                {/* ================= Performance ================= */}
+
+                <div className="mt-8">
+
+                    <DimensionBreakdown
+                        dimensions={analysis?.dimensions}
                     />
 
                 </div>
 
-                <OverallFeedbackCard
-                    feedback={analysis?.overallFeedback}
+                {/* ================= Improvement ================= */}
+
+                <div className="mt-8">
+
+                    <ImprovementTips
+                        tips={analysis?.improvementTips}
+                    />
+
+                </div>
+
+                {/* ================= Framework ================= */}
+
+                <div className="mt-8">
+
+                    <SuggestedFramework
+                        framework={analysis?.framework}
+                    />
+
+                </div>
+
+
+                {/* ANALYSIS SECTION */}
+
+                <div className="grid lg:grid-cols-[320px_1fr] gap-6 mt-6">
+
+                    <div className="space-y-6">
+
+                    </div>
+
+                </div>
+
+                <ActionButtons
+                    question={question}
+                    transcript={transcript}
+                    duration={duration}
+                    speechStats={speechStats}
+                    analysis={analysis}
                 />
 
             </div>
-
-            {/* RIGHT COLUMN */}
-
-            <DimensionSummaryCard
-                dimensions={analysis?.dimensions}
-            />
-
         </div>
-
-
-        {/* ================= Performance ================= */}
-
-        <div className="mt-8">
-
-            <DimensionBreakdown
-                dimensions={analysis?.dimensions}
-            />
-
-        </div>
-
-        {/* ================= Improvement ================= */}
-
-        <div className="mt-8">
-
-            <ImprovementTips
-                tips={analysis?.improvementTips}
-            />
-
-        </div>
-
-        {/* ================= Framework ================= */}
-
-        <div className="mt-8">
-
-            <SuggestedFramework
-                framework={analysis?.framework}
-            />
-
-        </div>
-
-
-        {/* ANALYSIS SECTION */}
-
-        <div className="grid lg:grid-cols-[320px_1fr] gap-6 mt-6">
-
-          <div className="space-y-6">
-
-          </div>
-
-        </div>
-
-        <ActionButtons
-          question={question}
-          transcript={transcript}
-          duration={duration}
-          speechStats={speechStats}
-          analysis={analysis}
-      />
-
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ReviewPage;
