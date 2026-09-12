@@ -78,12 +78,12 @@ const ReviewPage = () => {
 
             <ReviewHeader question={question} />
 
-            <div className="max-w-5xl mx-auto px-9">
+            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-9">
 
                 {/* VIDEO + TRANSCRIPT */}
 
                 {/* ================= Interview Overview ================= */}
-                <div className="grid lg:grid-cols-[0.8fr_1fr_auto] gap-4 mt-4 items-stretch">
+                <div className="mt-4 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1fr)_150px]">
 
                     {/* Video */}
                     <div className="min-w-0">
@@ -102,7 +102,7 @@ const ReviewPage = () => {
                     </div>
 
                     {/* Overall Score - minimum required space */}
-                    <div className="w-[150px]">
+                    <div className="w-full lg:w-[150px]">
                         <ScoreCard
                             score={analysis?.overallScore || 0}
                         />

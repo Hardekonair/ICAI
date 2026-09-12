@@ -44,7 +44,7 @@ export default function PracticeQuestions() {
     <div className="bg-white rounded-2xl shadow-sm w-full overflow-hidden col-span-2">
       
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-4 border-b">
         <div className="flex items-center gap-2">
           <span className="text-indigo-500">📘</span>
           <h3 className="font-semibold text-lg">Practice Questions</h3>
@@ -59,12 +59,12 @@ export default function PracticeQuestions() {
         {questions.map((q, i) => (
           <div
             key={i}
-            className={`group flex items-center justify-between px-5 py-4 border-b last:border-none ${
+            className={`group flex items-center justify-between gap-3 px-5 py-4 border-b last:border-none ${
               q.locked ? "opacity-60" : ""
             }`}
           >
             {/* Left */}
-            <div className="flex items-center gap-4">
+            <div className="flex min-w-0 items-center gap-4">
               
               {/* Icon */}
               <div className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-xl">
@@ -72,8 +72,8 @@ export default function PracticeQuestions() {
               </div>
 
               {/* Text */}
-              <div>
-                <p className="text-sm font-medium">{q.title}</p>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">{q.title}</p>
 
                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
                   <span>{q.type}</span>
@@ -95,7 +95,7 @@ export default function PracticeQuestions() {
             </div>
 
             {/* Right */}
-            <div>
+            <div className="shrink-0">
               {!q.locked ? (
                 <button className="opacity-0 group-hover:opacity-100 transition bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg">
                   ▶ Practice

@@ -148,13 +148,13 @@ const ChooseQuestion = () => {
   }
  
   return (
-     <div className="h-screen flex flex-col overflow-auto">
+     <div className="flex min-h-screen flex-col">
 
       {/* Header */}
       <Header />
 
       {/* Body */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 min-h-0">
 
         {/* Sidebar */}
         {/* <aside className="w-[250px] bg-white border-r hidden md:block"> */}
@@ -162,7 +162,7 @@ const ChooseQuestion = () => {
         {/* </aside> */}
 
       {/* Main Content */}
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6">
       {/* <Header/> */}
     <div className="max-w-7xl mx-auto">
       
@@ -173,7 +173,7 @@ const ChooseQuestion = () => {
           Practice Session
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
           Choose your question, testcase
         </h1>
 

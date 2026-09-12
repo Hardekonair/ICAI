@@ -27,7 +27,7 @@ const SuggestedFramework = ({ framework }) => {
       </div>
 
       {/* Framework */}
-      <div className="rounded-2xl bg-gradient-to-r from-indigo-50/80 to-cyan-50/80 border border-indigo-100 p-5">
+      <div className="review-framework-box rounded-2xl bg-gradient-to-r from-indigo-50/80 to-cyan-50/80 border border-indigo-100 p-5">
 
         {/* Framework Title */}
         <h3 className="text-base font-bold text-slate-900 mb-2">
@@ -42,7 +42,7 @@ const SuggestedFramework = ({ framework }) => {
       </div>
 
       {/* Tip */}
-      <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-indigo-50/70 border border-indigo-100 px-4 py-3">
+      <div className="review-callout mt-4 flex items-start gap-2.5 rounded-xl bg-indigo-50/70 border border-indigo-100 px-4 py-3">
 
         <Lightbulb
           size={17}

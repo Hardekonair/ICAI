@@ -497,10 +497,10 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col overflow-auto">
+    <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="flex-1 flex flex-col justify-center items-center bg-gray-100 px-4 py-8">
+      <div className="flex flex-1 flex-col items-center justify-center bg-gray-100 px-4 py-6 sm:py-8">
         {/* HEADER */}
         <div className="flex items-center text-red-500 font-semibold gap-2 mb-4">
           <div
@@ -594,7 +594,7 @@ useEffect(() => {
         </div>
 
         {/* <div className="bg-white rounded-2xl p-6 mt-4 w-full max-w-xl flex justify-center items-center gap-1"> */}
-        <div className="bg-white rounded-2xl p-6 mt-4 w-full max-w-xl h-24 flex justify-center items-center gap-1 overflow-hidden">
+        <div className="mt-4 flex h-24 w-full max-w-xl items-center justify-center gap-1 overflow-hidden rounded-2xl bg-white p-4 sm:p-6">
           {waveData.map((height, index) => (
             <div
               key={index}

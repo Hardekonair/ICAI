@@ -43,7 +43,7 @@ const DimensionRow = ({ title, score }) => {
   const color = getColor(score);
 
   return (
-    <div className="grid grid-cols-[175px_1fr_35px] items-center gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_35px] items-center gap-x-3 gap-y-2 sm:grid-cols-[175px_minmax(0,1fr)_35px] sm:gap-4">
 
       {/* Dimension */}
       <div className="flex items-center gap-2.5 min-w-0">
@@ -62,7 +62,7 @@ const DimensionRow = ({ title, score }) => {
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
+      <div className="col-span-2 w-full overflow-hidden rounded-full bg-slate-200 h-2.5 sm:col-auto">
         <div
           className={`${color.bar} h-full rounded-full transition-all duration-700`}
           style={{
@@ -84,7 +84,7 @@ const DimensionRow = ({ title, score }) => {
 
 const DimensionSummary = ({ dimensions = [] }) => {
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 h-[420px]">
+    <div className="h-auto rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 lg:min-h-[420px]">
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

@@ -9,11 +9,11 @@ const Introduction = () => {
   const {user,loading}=useAuth();  // We can access user and loading state from AuthContext using this custom hook. This is possible because we wrapped our app with AuthProvider in main.jsx which provides this context to the entire app. So now we can check if user is logged in or not and also if auth state is still loading or not to prevent navigation while loading. This is a great example of how context allows us to share state across the entire app without prop drilling.
 
   return (
-    <div className="min-h-[90vh] flex flex-col md:flex-row items-center justify-between bg-gradient-to-br from-[#5f2eea] to-[#1fa2ff] text-white px-6 md:px-0 py-10 md:py-16">
+    <div className="min-h-[90vh] flex flex-col items-center justify-between gap-10 bg-gradient-to-br from-[#5f2eea] to-[#1fa2ff] px-4 py-10 text-white sm:px-6 md:flex-row md:px-10 md:py-16 xl:px-[max(5rem,calc((100%_-_1400px)/2))]">
 
       {/* LEFT CONTENT */}
         {/* BADGE */}
-            <div className="flex-1 max-w-[620px] md:ml-[80px] text-center md:text-left">
+            <div className="w-full flex-1 max-w-[620px] text-center md:text-left">
         <div className="mt-9 mb-1 inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
         
           <Sparkles size={10} color="white" />
@@ -21,7 +21,7 @@ const Introduction = () => {
         </div>
 
         {/* TITLE */}
-        <h1 className="text-[30px] md:text-[60px] font-semibold leading-tight mt-0">
+        <h1 className="mt-0 text-[clamp(2rem,5vw,3.75rem)] font-semibold leading-tight">
           Nail Every Interview.{" "}
           <span className="bg-gradient-to-r from-[#5ce1e6] to-[#00ffa3] bg-clip-text text-transparent ">
             AI-Powered
@@ -71,7 +71,7 @@ const Introduction = () => {
       </div>
 
       {/* RIGHT IMAGE */}
-      <div className="flex-1 flex justify-center mt-8 md:mt-0">
+      <div className="flex w-full flex-1 justify-center md:mt-0">
         <img
           src={IMG}
           alt="INTRO"

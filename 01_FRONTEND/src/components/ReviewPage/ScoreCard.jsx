@@ -21,7 +21,7 @@ const ScoreCard = ({ score = 0 }) => {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-300 shadow-sm p-5 flex flex-col justify-start">
+    <div className="bg-white rounded-3xl border border-slate-300 shadow-sm p-4 flex flex-col justify-start min-h-[220px] lg:h-[260px]">
 
       {/* Header */}
       <h3 className="text-lg font-semibold text-slate-800 text-center">
@@ -29,7 +29,7 @@ const ScoreCard = ({ score = 0 }) => {
       </h3>
 
       {/* Gauge */}
-      <div className="flex justify-center mt-2">
+      <div className="flex justify-center mt-1">
 
         <div className="relative">
 
@@ -39,7 +39,7 @@ const ScoreCard = ({ score = 0 }) => {
               cx="60"
               cy="60"
               r={radius}
-              stroke="#e5e7eb"
+              stroke="var(--score-track)"
               strokeWidth="10"
               fill="none"
             />
@@ -76,10 +76,10 @@ const ScoreCard = ({ score = 0 }) => {
       </div>
 
       {/* Footer */}
-      <div className="mt-3 text-center">
+      <div className="mt-1 text-center">
 
         <span
-          className={`inline-flex px-3 py-1 rounded-full text-sm font-medium
+          className={`inline-flex px-2 py-1 rounded-full text-sm font-medium
             ${
               score >= 80
                 ? "bg-green-100 text-green-700"

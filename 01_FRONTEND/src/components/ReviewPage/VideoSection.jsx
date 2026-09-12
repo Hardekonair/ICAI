@@ -1,6 +1,6 @@
 const VideoSection = ({ videoUrl }) => {
   return (
-    <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
+    <div className="review-video-surface bg-white rounded-3xl shadow-sm overflow-hidden">
 
       <video
         src={videoUrl}

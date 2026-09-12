@@ -81,20 +81,20 @@ export default function Header() {
 
       {/* <header class="sticky justify-between top-0 z-40 h-16 bg-white border-b border-gray-100 shadow-sm flex items-center px-4 gap-4" > */}
       <header className="sticky top-0 z-50 w-full border-b bg-white shadow-md">
-        <div className="max-w px-5 mx-auto  py-2 flex justify-between items-center">
+        <div className="flex w-full items-center justify-between gap-3 px-4 py-2 sm:px-6 lg:px-8">
 
           {/* LEFT */}
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-left "
+            className="flex min-w-0 items-center gap-2 text-left"
           >
             <img
               src={logo}
               alt="Interview Coach logo"
               className="h-12 w-13 rounded-2xl p-1 shadow-sm"
             />
-            <div className="leading-tight">
+            <div className="min-w-0 leading-tight">
               <span className="block text-lg font-bold text-gray-900 sm:text-xl">
                 Interview{" "}
                 <span className=" text-indigo-600">
@@ -109,10 +109,10 @@ export default function Header() {
 
           {/* RIGHT */}
           {user ? (
-            <div className="flex items-center gap-4 relative">
+            <div className="relative flex shrink-0 items-center gap-2 sm:gap-4">
 
               {/* Notification */}
-              <button>
+              <button className="hidden sm:inline-flex" aria-label="Notifications">
                 <Bell size={18} />
               </button>
 
@@ -169,9 +169,10 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <button
                 type="button"
+                aria-label="Start free"
                 onClick={() => {
                   if (loading) return; // prevent navigation while loading
                   if (user) {
@@ -183,13 +184,14 @@ export default function Header() {
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 sm:px-5"
               >
                 <Sparkles size={16} />
-                <span>Start Free</span>
+                <span className="hidden min-[380px]:inline">Start Free</span>
               </button>
               <button
                 type="button"
+                aria-label="Log in"
                 onClick={() => navigate("/login")}
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-green-700 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 sm:px-5"
-              >            <span>Login</span>
+              >            <span className="hidden min-[380px]:inline">Login</span>
               </button>
             </div>
           )}

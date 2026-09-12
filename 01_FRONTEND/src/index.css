@@ -4,6 +4,282 @@
 body{
   margin: 0;
   font-family: "Inter", sans-serif;
+  min-width: 320px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+}
+
+img, video {
+  height: auto;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+input, textarea, select {
+  max-width: 100%;
+}
+
+/* Shared safeguards for long, user-provided interview content. */
+.break-words, .whitespace-pre-wrap {
+  overflow-wrap: anywhere;
+}
+
+/* Theme tokens are additive: the existing light UI remains the default. */
+:root {
+  --theme-page: #f9fafb;
+  --theme-surface: #ffffff;
+  --theme-surface-muted: #f8fafc;
+  --theme-text: #1f2937;
+  --theme-text-muted: #64748b;
+  --theme-border: #e5e7eb;
+  --score-track: #e5e7eb;
+}
+
+:root[data-theme="dark"] {
+  --theme-page: #0b1120;
+  --theme-surface: #111827;
+  --theme-surface-muted: #172033;
+  --theme-text: #f1f5f9;
+  --theme-text-muted: #94a3b8;
+  --theme-border: #273449;
+  --score-track: #334155;
+  background: var(--theme-page);
+}
+
+:root[data-theme="dark"] body {
+  background: var(--theme-page);
+  color: var(--theme-text);
+}
+
+/* Tailwind surface, text, and border utilities used throughout the app. */
+:root[data-theme="dark"] .bg-white {
+  background-color: var(--theme-surface) !important;
+}
+
+:root[data-theme="dark"] .bg-gray-50,
+:root[data-theme="dark"] .bg-\[\#f8fafc\] {
+  background-color: var(--theme-page) !important;
+}
+
+:root[data-theme="dark"] .bg-gray-100,
+:root[data-theme="dark"] .bg-slate-100,
+:root[data-theme="dark"] .bg-slate-50,
+:root[data-theme="dark"] .bg-slate-50\/70,
+:root[data-theme="dark"] .bg-gray-50\/60 {
+  background-color: var(--theme-surface-muted) !important;
+}
+
+:root[data-theme="dark"] .bg-indigo-50,
+:root[data-theme="dark"] .bg-cyan-50,
+:root[data-theme="dark"] .bg-blue-50 {
+  background-color: #172554 !important;
+}
+
+:root[data-theme="dark"] .bg-yellow-50,
+:root[data-theme="dark"] .bg-amber-50,
+:root[data-theme="dark"] .bg-orange-50 {
+  background-color: #2b2410 !important;
+}
+
+:root[data-theme="dark"] .bg-emerald-50,
+:root[data-theme="dark"] .bg-green-50 {
+  background-color: #102b24 !important;
+}
+
+:root[data-theme="dark"] .bg-emerald-100,
+:root[data-theme="dark"] .bg-green-100 {
+  background-color: #12372d !important;
+}
+
+:root[data-theme="dark"] .bg-blue-100,
+:root[data-theme="dark"] .bg-indigo-100 {
+  background-color: #1e3a5f !important;
+}
+
+:root[data-theme="dark"] .bg-yellow-100,
+:root[data-theme="dark"] .bg-amber-100 {
+  background-color: #3b2f10 !important;
+}
+
+:root[data-theme="dark"] .bg-red-100 {
+  background-color: #3f1d2e !important;
+}
+
+:root[data-theme="dark"] .bg-white\/80 {
+  background-color: rgb(11 17 32 / 0.8) !important;
+}
+
+:root[data-theme="dark"] .text-gray-900,
+:root[data-theme="dark"] .text-gray-800,
+:root[data-theme="dark"] .text-slate-900,
+:root[data-theme="dark"] .text-slate-800,
+:root[data-theme="dark"] .text-black {
+  color: var(--theme-text) !important;
+}
+
+:root[data-theme="dark"] .text-gray-700,
+:root[data-theme="dark"] .text-gray-600,
+:root[data-theme="dark"] .text-gray-500,
+:root[data-theme="dark"] .text-gray-400,
+:root[data-theme="dark"] .text-slate-700,
+:root[data-theme="dark"] .text-slate-600,
+:root[data-theme="dark"] .text-slate-500,
+:root[data-theme="dark"] .text-slate-400 {
+  color: var(--theme-text-muted) !important;
+}
+
+:root[data-theme="dark"] .border,
+:root[data-theme="dark"] .border-gray-100,
+:root[data-theme="dark"] .border-gray-200,
+:root[data-theme="dark"] .border-slate-100,
+:root[data-theme="dark"] .border-slate-200,
+:root[data-theme="dark"] .border-slate-300,
+:root[data-theme="dark"] .border-b,
+:root[data-theme="dark"] .border-t {
+  border-color: var(--theme-border) !important;
+}
+
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select {
+  background-color: var(--theme-surface-muted) !important;
+  border-color: #3a4a63 !important;
+  color: var(--theme-text) !important;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: #7f8ea3 !important;
+}
+
+:root[data-theme="dark"] .hover\:bg-gray-50:hover,
+:root[data-theme="dark"] .hover\:bg-gray-100:hover,
+:root[data-theme="dark"] .hover\:bg-slate-50:hover,
+:root[data-theme="dark"] .hover\:bg-slate-50\/70:hover {
+  background-color: #202c40 !important;
+}
+
+/* Plain-CSS marketing sections retain their light values unless dark is active. */
+:root[data-theme="dark"] .howItWorks,
+:root[data-theme="dark"] .feedbackSection,
+:root[data-theme="dark"] .pricing-section {
+  background: var(--theme-page);
+}
+
+:root[data-theme="dark"] .howItWorks .title,
+:root[data-theme="dark"] .howItWorks .step h3,
+:root[data-theme="dark"] .pricing-section h2,
+:root[data-theme="dark"] .feedbackSection h2,
+:root[data-theme="dark"] .pricing-card h4,
+:root[data-theme="dark"] .feedbackcard,
+:root[data-theme="dark"] .reviewText,
+:root[data-theme="dark"] .user h4 {
+  color: var(--theme-text);
+}
+
+:root[data-theme="dark"] .step,
+:root[data-theme="dark"] .pricing-card,
+:root[data-theme="dark"] .feedbackcard {
+  background: var(--theme-surface);
+}
+
+:root[data-theme="dark"] .howItWorks .subtitle,
+:root[data-theme="dark"] .howItWorks .step p,
+:root[data-theme="dark"] .pricing-subtitle,
+:root[data-theme="dark"] .pricing-duration,
+:root[data-theme="dark"] .feedbackSection .subtitle,
+:root[data-theme="dark"] .user span {
+  color: var(--theme-text-muted);
+}
+
+:root[data-theme="dark"] .pricing-pro {
+  background: linear-gradient(135deg, #3730a3, #0e7490);
+}
+
+:root[data-theme="dark"] .pricing-pro .pricing-duration {
+  color: #dbeafe;
+}
+
+:root[data-theme="dark"] .footer {
+  background: #070d18;
+}
+
+/* Review-only callouts and the report banner use light gradient utility stops. */
+:root[data-theme="dark"] .review-header {
+  background: linear-gradient(90deg, #111827, #172554 52%, #123044) !important;
+  border-color: var(--theme-border) !important;
+}
+
+:root[data-theme="dark"] .review-header .bg-slate-200 {
+  background-color: #3a4a63 !important;
+}
+
+:root[data-theme="dark"] .review-header .from-slate-900 {
+  --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(248 250 252 / 0) var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .review-header .via-indigo-700 {
+  --tw-gradient-via: #c4b5fd var(--tw-gradient-via-position) !important;
+  --tw-gradient-to: rgb(196 181 253 / 0) var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .review-header .to-cyan-600 {
+  --tw-gradient-to: #67e8f9 var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .review-callout,
+:root[data-theme="dark"] .review-framework-box {
+  background: #172554 !important;
+  border-color: #334a74 !important;
+}
+
+:root[data-theme="dark"] .review-callout .text-slate-900,
+:root[data-theme="dark"] .review-framework-box .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+:root[data-theme="dark"] .review-callout .text-slate-600,
+:root[data-theme="dark"] .review-framework-box .text-slate-700,
+:root[data-theme="dark"] .review-callout .text-indigo-700 {
+  color: #cbd5e1 !important;
+}
+
+:root[data-theme="dark"] .review-video-surface {
+  border: 1px solid var(--theme-border);
+  background-color: #020617 !important;
+}
+
+:root[data-theme="dark"] .text-emerald-700,
+:root[data-theme="dark"] .text-green-700 {
+  color: #6ee7b7 !important;
+}
+
+:root[data-theme="dark"] .text-blue-700,
+:root[data-theme="dark"] .text-indigo-700 {
+  color: #a5b4fc !important;
+}
+
+:root[data-theme="dark"] .text-yellow-700,
+:root[data-theme="dark"] .text-amber-700 {
+  color: #fcd34d !important;
+}
+
+:root[data-theme="dark"] .text-red-700 {
+  color: #fda4af !important;
 }
 
 

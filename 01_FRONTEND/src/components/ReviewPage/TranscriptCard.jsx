@@ -6,7 +6,7 @@ const TranscriptCard = ({
   pace,
 }) => {
   return (
-    <div className="bg-white rounded-3xl shadow-sm p-4 flex flex-col h-[260px] min-w-0">
+    <div className="flex min-w-0 flex-col rounded-3xl bg-white p-4 shadow-sm min-h-[220px] lg:h-[260px]">
 
 <div className="flex items-center gap-3 mb-3 shrink-0">
 

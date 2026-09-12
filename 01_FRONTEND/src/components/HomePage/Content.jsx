@@ -45,13 +45,13 @@ const Content = () => {
   }
     
   return (
-    <div className=" sticky left-0 flex bg-gray-50 min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
 
         {/* SIDEBAR */}
       <SideBar/>
 
         {/* MAIN */}
-        <main className="flex-1 p-3 space-y-2 ">
+        <main className="min-w-0 flex-1 space-y-4 p-3 sm:p-5 lg:p-6">
 
             {/* HERO */}
             <Hero dashboard={dashboard}/>

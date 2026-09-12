@@ -565,7 +565,7 @@ const AnalyzePage = () => {
 
 
                 {/* Question */}
-                <div className="flex justify-between gap-6">
+            <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-6">
 
                   <span className="text-slate-500">
                     Question
@@ -575,7 +575,8 @@ const AnalyzePage = () => {
                     className="
                       font-semibold
                       text-slate-800
-                      text-right
+                      break-words
+                      sm:text-right
                     "
                   >
                     {question?.title ||
@@ -798,8 +799,12 @@ const AnalyzePage = () => {
             className="
               mt-8
               flex
-              items-center
-              justify-between
+              flex-col-reverse
+              items-stretch
+              gap-3
+              sm:flex-row
+              sm:items-center
+              sm:justify-between
             "
           >
 
@@ -817,6 +822,7 @@ const AnalyzePage = () => {
               className="
                 flex
                 items-center
+                justify-center
                 gap-2
                 px-6
                 py-3
@@ -846,6 +852,7 @@ const AnalyzePage = () => {
               className="
                 flex
                 items-center
+                justify-center
                 gap-2
                 px-8
                 py-4

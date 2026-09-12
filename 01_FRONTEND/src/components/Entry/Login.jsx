@@ -73,13 +73,13 @@ export default function Login() {
     {loading && <ShowLoading message="Signing you in..." />}
     <div >
       <Header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm" />
-      <div className="flex flex-col lg:flex-row min-h-screen">
+      <div className="flex min-h-screen flex-col lg:flex-row">
       {/* left side of login page */}
         <LoginInfo/>
       
       {/* RIGHT SIDE */}
-      <div className="flex flex-1 items-center justify-center bg-gray-50">
-        <div className="p-7 w-[420px] max-w-full px-1">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 px-4 py-8 sm:px-6">
+        <div className="w-full max-w-[420px] px-1 sm:px-4">
 
           {/* Logo */}
           <div className="flex items-center gap-2 mb-6">
@@ -106,7 +106,7 @@ export default function Login() {
             <label className="text-sm mt-3">Email address</label>
             <input
               type="email"
-              className="mt-1 p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="mt-1 w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               placeholder="you@example.com"
               value={email}
               onBlur={()=>{settouched({...touched,email:true})}}    //Fires when the input loses focus (user clicks away / tabs out)
@@ -118,7 +118,7 @@ export default function Login() {
             <label className="text-sm mt-3">Password</label>
             <input
               type="password"
-              className="mt-1 p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="mt-1 w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               placeholder="Enter your password"
               value={password}
               onBlur={()=>{settouched({...touched,password:true})}}   //Fires when the input loses focus (user clicks away / tabs out)

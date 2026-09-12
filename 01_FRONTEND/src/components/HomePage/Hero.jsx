@@ -7,7 +7,7 @@ const Hero = ({ dashboard }) => {
   const sessions = dashboard?.stats?.sessions ?? 0;
 
   return (
-    <div className="bg-gradient-to-r from-indigo-600 to-cyan-500 text-white p-9 rounded-3xl flex justify-between items-center shadow-lg">
+    <div className="flex flex-col items-start justify-between gap-5 rounded-3xl bg-gradient-to-r from-indigo-600 to-cyan-500 p-5 text-white shadow-lg sm:p-7 md:flex-row md:items-center md:p-9">
 
       <div>
 
@@ -26,7 +26,7 @@ const Hero = ({ dashboard }) => {
       </div>
 
       <Link
-        className="bg-white text-indigo-600 px-5 py-2 rounded-full font-semibold shadow"
+        className="shrink-0 rounded-full bg-white px-5 py-2 text-center font-semibold text-indigo-600 shadow"
         to="/questions"
       >
         ▶ Start Practicing

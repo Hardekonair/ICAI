@@ -54,7 +54,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="py-20 px-[6%] bg-gray-50 text-center">
+    <section className="bg-gray-50 px-4 py-16 text-center sm:px-6 lg:px-[max(6%,calc((100%_-_1400px)/2))] lg:py-20">
       
       {/* Header */}
       <div className="max-w-[700px] mx-auto">

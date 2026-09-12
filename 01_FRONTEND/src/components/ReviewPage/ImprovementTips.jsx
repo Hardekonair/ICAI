@@ -177,7 +177,7 @@ const ImprovementTips = ({ tips = [] }) => {
 
       {/* Practice Strategy */}
       <div
-        className="
+        className="review-callout
           mt-5
           rounded-2xl
           bg-indigo-50/70

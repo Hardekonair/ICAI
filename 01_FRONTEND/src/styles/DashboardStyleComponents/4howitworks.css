@@ -1,12 +1,12 @@
 .howItWorks {
-  padding: 60px 30px;
+  padding: clamp(3rem, 7vw, 5rem) clamp(1rem, 5vw, 3rem);
   text-align: center;
-  height: 70vh;
+  min-height: 0;
   background: #f2f2f2;
 }
 
 .title {
-  font-size: 39px;
+  font-size: clamp(2rem, 4vw, 2.45rem);
   font-weight: 700;
   margin-bottom: 10px;
   color: #1f2937;

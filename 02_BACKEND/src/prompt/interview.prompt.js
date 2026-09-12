@@ -402,7 +402,7 @@ Summarize the interview in under 120 words.
 IMPORTANT
 ==================================================
 
-Return ONLY valid JSON.
+Return ONLY valid JSON (strictly).
 
 No markdown.
 

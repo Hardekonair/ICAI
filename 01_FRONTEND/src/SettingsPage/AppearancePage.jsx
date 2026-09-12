@@ -1,12 +1,12 @@
-import { useState } from "react";
 import {
   Sun,
   Moon,
   Monitor,
 } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const AppearancePage = () => {
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
 
   const themes = [
     {

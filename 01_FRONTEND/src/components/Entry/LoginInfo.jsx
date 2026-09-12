@@ -8,7 +8,7 @@ const LoginInfo = () => {
 
       {/* LEFT SIDE */}
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-indigo-600 via-indigo-700 to-cyan-500 text-white items-center ">
-        <div className="max-w-[520px]  ml-20">
+        <div className="mx-auto w-full max-w-[520px] px-6 xl:px-0">
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6">

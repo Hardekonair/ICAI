@@ -338,7 +338,7 @@ export default function Signup() {
                                 <input
                                     type="text"
                                     disabled={!emailVerified}
-                                    className="mt-1 rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
+                                    className="mt-1 w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
                                     placeholder="Aadi Vaish"
                                     value={name}
                                     onBlur={() =>
@@ -547,7 +547,7 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     disabled={!emailVerified}
-                                    className="mt-1 rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
+                                    className="mt-1 w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
                                     placeholder="Enter your password"
                                     value={password}
                                     onBlur={() =>
@@ -614,7 +614,7 @@ export default function Signup() {
                                 <input
                                     type="password"
                                     disabled={!emailVerified}
-                                    className="mt-1 rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
+                                    className="mt-1 w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:cursor-not-allowed disabled:bg-gray-100 sm:p-4"
                                     placeholder="Re-Enter your password"
                                     value={confirmpassword}
                                     onBlur={() =>
