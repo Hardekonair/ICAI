@@ -22,7 +22,7 @@ function GoogleLoginButton() {
             console.log("Backend Response: ", res.data);
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
-            window.location.href = "/dashboard";
+            window.location.href = "/homepage";
         } catch (err) {
             console.log("Google login error:", err);
             console.log("Google login response:", err.response?.data);
